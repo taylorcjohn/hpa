@@ -35,7 +35,8 @@ def ratap(target, numdenmax, sm, cm, thresh, enable_tau):
     ratap_p(target, numdenmax, thresh, math.pi,  "* Pi")
 
     if enable_tau:
-        ratap_p(target, numdenmax, thresh, math.tau, "* Tau")
+        tau = math.pi * 2.0
+        ratap_p(target, numdenmax, thresh, tau, "* Tau")
 
     ratap_p(target, numdenmax, thresh, math.e,   "* e")
 

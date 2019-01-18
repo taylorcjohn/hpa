@@ -54,8 +54,6 @@ less obvious
   
 * ###### Optional switch between Pi and Tau
 
-  Note: math.tau is defined in Python 3.7
-
 * ###### Change command line handling from getopt to argparse
   
   Among other advantages argparse provides automatic help
@@ -93,7 +91,7 @@ approximation            error          	value
 
 -n sets maximum numerator or denominator value (default = 1000)
 
--b enables Tau (if using Python 3.7+)
+-b enables Tau matching (2 * Pi)
 
 ```
 top 5 best approximations to 3.141592653589793
