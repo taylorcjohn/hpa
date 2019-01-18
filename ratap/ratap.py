@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-18 12:30
+# 2019-01-18 17:30
 #
 # ...........................................................................
 #
@@ -15,6 +15,7 @@
 # 2019-01-18 12:00 tau calculated to avoid 3.7 requirement
 # 2019-01-18 12:10 enable_phi
 # 2019-01-18 12:30 enable_e
+# 2019-01-18 17:30 sign fixes
 #
 # ...........................................................................
 
@@ -61,9 +62,9 @@ def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi):
     return results
 
 # ...........................................................................
-def ratap_p(target, numdenmax, thresh, fixed, fixed_p):
+def ratap_p(tval, numdenmax, thresh, fixed, fixed_p):
 
-    global n, d, t, nb, db, best, results, f, fp
+    global n, d, t, nb, db, best, results, f, fp, tneg
 
     best = 1e6
     f = fixed
@@ -77,14 +78,16 @@ def ratap_p(target, numdenmax, thresh, fixed, fixed_p):
     try:
         while (max(n,d) < numdenmax) & (best > thresh):
             n += 1
-            d = math.floor( (n * f)/ target )
+            d = math.floor( (n * f)/ tval )
             try:
-                t = ( (n * f)/ d ) - target
+                t = ( (n * f)/ d ) - tval
             except:
                 t = math.inf
             test()
+
             d += 1
-            t = target - ( (n * f)/ d )
+
+            t = ((n * f) / d) - tval
             test()
 
     except:
@@ -96,16 +99,19 @@ def test():
 
     global n, d, t, nb, db, best, results, f, fp
 
-    if ( t < best ):
+    if ( abs(t) < best ):
         nb = n
         db = d
-        best = t
+        best = abs(t)
         # print("{} / {}  best {}  value {} gcd {}".format(nb, db, best, nb/db, math.gcd(nb,db)))
 
         if math.gcd(nb,db) < 2:
             pretty = "{} / {}  {}".format(nb, db, fp)
 
-            results.append ((pretty, best, (nb * f)/ db) )
+            try:
+                results.append ((pretty, t, (nb * f)/ db) )
+            except:
+                pass
 
 
 # ...........................................................................
@@ -118,13 +124,13 @@ def usage(argv):
 
 # ...........................................................................
 def takeSecond(elem):
-    return elem[1]
+    return abs(elem[1])
 
 
 # ...........................................................................
 def main(argv):
 
-    global timing
+    global timing, tval, tneg
 
     time_start = time.time()
 
@@ -181,16 +187,38 @@ def main(argv):
         for arg in args:
             target = float(arg)
 
-        results = ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi)
+        # ...........................................................................
+        # remember if negative
+        # ...........................................................................
+
+        if (target < 0):
+            tneg = True
+            tval = 0.0 - target
+        else:
+            tneg = False
+            tval = target
+
+        results = ratap(tval, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi)
 
         print("\ntop {} best approximations to {}\n".format(top_n, target))
 
-        print("{:<25}{:15}\t{:15}\n".format("approximation","error","value"))
+        print("{:<25}{:23}{:15}\n".format(" approximation","  error", "value"))
 
         try:
+            if tneg:
+                sign = "-"
+            else:
+                sign = " "
+
             for x in range (0, top_n):
                 s = results[x]
-                print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
+
+                if (s[1] < 0):
+                    errsign = "-"
+                else:
+                    errsign = " "
+
+                print("{}{:<25}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
         except:
             pass
 
