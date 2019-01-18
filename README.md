@@ -10,7 +10,7 @@ of symmetry
 This function attempts to find close approximations using simple
 fractions or measures using common roots such as sqrt(2)
 
-#### summary
+### summary
 
 A long time ago I wrote a simple program to find close rational
 approximations to numbers and to show how closely the fractions
@@ -41,9 +41,9 @@ These 'toy's may be genuinely geometrical for which analytic solutions
 are relatively easy to derive but when expressed numerically are
 less obvious
 
-## Future extensions
+#### Future extensions
 
-* ###### Reciprocals
+* ###### Reciprocals of special values
 
   For example to discover 1/Pi, 6/(5 * e) etc.
 
