@@ -67,7 +67,7 @@ less obvious
 
 #### python ratap.py
 
-Note that no numerator/denominaor values greater than 1000 are
+Note that no numerator/denominator values greater than 1000 are
 considered by default
 
 Pi is the default internal value for the approximation
