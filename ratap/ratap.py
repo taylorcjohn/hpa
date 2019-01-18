@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-18 12:00
+# 2019-01-18 12:30
 #
 # ...........................................................................
 #
@@ -13,6 +13,8 @@
 # 2019-01-17 21:00 cube root added (-3)
 # 2019-01-18 10:00 enable_tau
 # 2019-01-18 12:00 tau calculated to avoid 3.7 requirement
+# 2019-01-18 12:10 enable_phi
+# 2019-01-18 12:30 enable_e
 #
 # ...........................................................................
 
@@ -25,21 +27,26 @@ import time
 
 
 # ...........................................................................
-def ratap(target, numdenmax, sm, cm, thresh, enable_tau):
+def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi):
 
     global results
 
     results = []
 
-    ratap_p(target, numdenmax, thresh, 1.0,      "ratio")
+    ratap_p(target, numdenmax, thresh, 1.0, "ratio")
 
-    ratap_p(target, numdenmax, thresh, math.pi,  "* Pi")
+    ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
+
+    if enable_e:
+        ratap_p(target, numdenmax, thresh, math.e, "* e")
 
     if enable_tau:
         tau = math.pi * 2.0
         ratap_p(target, numdenmax, thresh, tau, "* Tau")
 
-    ratap_p(target, numdenmax, thresh, math.e,   "* e")
+    if enable_phi:
+        phi = (1 + 5 ** 0.5) / 2
+        ratap_p(target, numdenmax, thresh, phi, "* Phi")
 
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
@@ -127,7 +134,9 @@ def main(argv):
     cm = 3
     target = math.pi
     top_n = 10
+    enable_e = True
     enable_tau = False
+    enable_phi = False
 
     try:
         # ...........................................................................
@@ -136,7 +145,7 @@ def main(argv):
 
         a = argv
 
-        opts, args = getopt.getopt(a[1:], 'hb2:3:n:t:v:x:')  # @UnusedVariable
+        opts, args = getopt.getopt(a[1:], 'hbep2:3:n:t:v:x:')  # @UnusedVariable
 
         for opt, arg in opts:
             if opt == '-h':
@@ -160,21 +169,30 @@ def main(argv):
             elif opt in ("-x", "top"):
                 top_n = int(arg)
 
+            elif opt in ("-e", "exp"):
+                enable_e = not enable_e
+
             elif opt in ("-b", "tau"):
                 enable_tau = not enable_tau
+
+            elif opt in ("-p", "phi"):
+                enable_phi = not enable_phi
 
         for arg in args:
             target = float(arg)
 
-        results = ratap(target, numdenmax, sm, cm, thresh, enable_tau)
+        results = ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi)
 
         print("\ntop {} best approximations to {}\n".format(top_n, target))
 
         print("{:<25}{:15}\t{:15}\n".format("approximation","error","value"))
 
-        for x in range (0, top_n):
-            s = results[x]
-            print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
+        try:
+            for x in range (0, top_n):
+                s = results[x]
+                print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
+        except:
+            pass
 
     except:
         traceback.print_exc()
