@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-17 21:00
+# 2019-01-18 10:00
 #
 # ...........................................................................
 #
@@ -11,6 +11,7 @@
 # 2019-01-17 18:30 top results ordered
 # 2019-01-17 19:00 remove sqrt for natural squares e.g. sqrt(4), sqrt(9)
 # 2019-01-17 21:00 cube root added (-3)
+# 2019-01-18 10:00 enable_tau
 #
 # ...........................................................................
 
@@ -23,15 +24,21 @@ import time
 
 
 # ...........................................................................
-def ratap(target, numdenmax, sm, cm, thresh):
+def ratap(target, numdenmax, sm, cm, thresh, enable_tau):
 
     global results
 
     results = []
+
     ratap_p(target, numdenmax, thresh, 1.0,      "ratio")
+
     ratap_p(target, numdenmax, thresh, math.pi,  "* Pi")
-    ratap_p(target, numdenmax, thresh, math.tau, "* Tau")
+
+    if enable_tau:
+        ratap_p(target, numdenmax, thresh, math.tau, "* Tau")
+
     ratap_p(target, numdenmax, thresh, math.e,   "* e")
+
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
             ratap_p(target, numdenmax, thresh, math.sqrt(s), "* sqrt({})".format(s))
@@ -118,6 +125,7 @@ def main(argv):
     cm = 3
     target = math.pi
     top_n = 10
+    enable_tau = False
 
     try:
         # ...........................................................................
@@ -126,7 +134,7 @@ def main(argv):
 
         a = argv
 
-        opts, args = getopt.getopt(a[1:], 'h2:3:n:t:v:x:')  # @UnusedVariable
+        opts, args = getopt.getopt(a[1:], 'hb2:3:n:t:v:x:')  # @UnusedVariable
 
         for opt, arg in opts:
             if opt == '-h':
@@ -150,19 +158,24 @@ def main(argv):
             elif opt in ("-x", "top"):
                 top_n = int(arg)
 
+            elif opt in ("-b", "tau"):
+                enable_tau = not enable_tau
+
         for arg in args:
             target = float(arg)
 
+        results = ratap(target, numdenmax, sm, cm, thresh, enable_tau)
+
+        print("\ntop {} best approximations to {}\n".format(top_n, target))
+
+        print("{:<25}{:15}\t{:15}".format("approximation","error","value"))
+
+        for x in range (0, top_n):
+            s = results[x]
+            print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
+
     except:
         traceback.print_exc()
-
-    results = ratap(target, numdenmax, sm, cm, thresh)
-
-    print("\ntop {} best approximations to {}\n".format(top_n, target))
-
-    for x in range (0, top_n):
-        s = results[x]
-        print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
 
 # ...........................................................................
 
