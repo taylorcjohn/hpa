@@ -2,17 +2,35 @@
 
 Find rational approximations
 
-### rationale:
+### rationale
 
 To obtain insight into underlying solutions and hints to rôle
 of symmetry
 
-Note that optimisation methods often give exact solutions to
-optimisation problems but these may be disguised rational answers
-such as 1/3 or sqrt(2)/2
-
 This function attempts to find close approximations using simple
 fractions or measures using common roots such as sqrt(2)
+
+#### summary
+
+A long time ago I wrote a simple program to find close rational
+approximations to numbers and to show how closely the fractions
+approximate the values in question.  For example to find successively
+better approximations to Pi : 3/1... 22/7, 179/57... 355/113 etc.
+
+This last fraction (355/113) is an extremely close match to Pi, the
+next (slightly better) appromation is 52163/16604.
+
+I decided that it may be useful to apply this exploration to answers
+from optimisation methods to try to uncover hidden representations
+that would otherwise be difficult to understand. 
+
+For example, if a value is shown to be 7.853981633974 the function can
+discover that it is actually extremely close to 5/2 * Pi which may be
+useful to help understand the problem.
+
+Optimisation methods often give exact solutions to optimisation
+problems but these may be disguised rational answers such as 3/7 or
+sqrt(2)/2
 
 The function may have other “guessing” applications
 
