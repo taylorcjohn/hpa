@@ -130,8 +130,8 @@ def main(argv):
 
     thresh = 1e-9
     numdenmax = 1000
-    sm = 3
-    cm = 3
+    sm = 10
+    cm = 10
     target = math.pi
     top_n = 10
     enable_e = True
