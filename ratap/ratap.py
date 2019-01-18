@@ -168,7 +168,7 @@ def main(argv):
 
         print("\ntop {} best approximations to {}\n".format(top_n, target))
 
-        print("{:<25}{:15}\t{:15}".format("approximation","error","value"))
+        print("{:<25}{:15}\t{:15}/n".format("approximation","error","value"))
 
         for x in range (0, top_n):
             s = results[x]
