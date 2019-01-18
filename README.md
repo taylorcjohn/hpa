@@ -41,6 +41,7 @@ These 'toy's may be genuinely geometrical for which analytic solutions
 are relatively easy to derive but when expressed numerically are
 less obvious
 
+
 #### Future extensions
 
 * ###### Reciprocals of special values
