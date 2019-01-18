@@ -18,7 +18,7 @@ approximate the values in question.  For example to find successively
 better approximations to Pi : 3/1... 22/7, 179/57... 355/113 etc.
 
 This last fraction (355/113) is an extremely close match to Pi, the
-next (slightly better) appromation is 52163/16604.
+next (slightly better) approximation is 52163/16604.
 
 I decided that it may be useful to apply this exploration to answers
 from optimisation methods to try to uncover hidden representations
