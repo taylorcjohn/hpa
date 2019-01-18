@@ -25,8 +25,9 @@ import time
 # ...........................................................................
 def ratap(target, numdenmax, sm, cm, thresh):
 
-    global res
-    res = []
+    global results
+
+    results = []
     ratap_p(target, numdenmax, thresh, 1.0,      "ratio")
     ratap_p(target, numdenmax, thresh, math.pi,  "* Pi")
     ratap_p(target, numdenmax, thresh, math.tau, "* Tau")
@@ -39,14 +40,14 @@ def ratap(target, numdenmax, sm, cm, thresh):
         if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
             ratap_p(target, numdenmax, thresh, math.pow(s,1.0/3), "* cbrt({})".format(s))
 
-    so = sorted(res, key=takeSecond, reverse=False)
+    results = sorted(results, key=takeSecond, reverse=False)
 
-    return so
+    return results
 
 # ...........................................................................
 def ratap_p(target, numdenmax, thresh, fixed, fixed_p):
 
-    global n, d, t, nb, db, best, res, f, fp
+    global n, d, t, nb, db, best, results, f, fp
 
     best = 1e6
     f = fixed
@@ -77,7 +78,7 @@ def ratap_p(target, numdenmax, thresh, fixed, fixed_p):
 # ...........................................................................
 def test():
 
-    global n, d, t, nb, db, best, res, f, fp
+    global n, d, t, nb, db, best, results, f, fp
 
     if ( t < best ):
         nb = n
@@ -88,14 +89,14 @@ def test():
         if math.gcd(nb,db) < 2:
             pretty = "{} / {}  {}".format(nb, db, fp)
 
-            res.append ((pretty, best, (nb * f)/ db) )
+            results.append ((pretty, best, (nb * f)/ db) )
 
 
 # ...........................................................................
 # usage message
 # ...........................................................................
 def usage(argv):
-    print('usage : ' + argv[0] + ' -h help -t thresh -n numdenmax -m sqrtmax -v value -x top_n')
+    print('usage : ' + argv[0] + ' -h help -t thresh -n numdenmax -m sqrtmax -v value -x top_n -2 sqrtmax -3 cubemax ')
     os._exit(1)
 
 
@@ -155,12 +156,12 @@ def main(argv):
     except:
         traceback.print_exc()
 
-    res = ratap(target, numdenmax, sm, cm, thresh)
+    results = ratap(target, numdenmax, sm, cm, thresh)
 
     print("\ntop {} best approximations to {}\n".format(top_n, target))
 
     for x in range (0, top_n):
-        s = res[x]
+        s = results[x]
         print("{:<25}{:.15f}\t{:.15f}".format(s[0], s[1], s[2]))
 
 # ...........................................................................

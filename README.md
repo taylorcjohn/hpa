@@ -36,6 +36,13 @@ less obvious
   
 * ###### Optional switch between Pi and Tau
 
+* ###### Change command line handling from getopt to argparse
+  
+  Among other advantages argparse provides automatic help
+
+* ###### Improve in-code documentation
+
+
 ### Examples
 
 #### python ratap.py 1.414213562373095
