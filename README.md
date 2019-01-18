@@ -62,7 +62,6 @@ less obvious
 
 * ###### Improve in-code documentation
 
-
 ### Examples
 
 #### python ratap.py
