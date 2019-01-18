@@ -1,5 +1,6 @@
 # ratap
-find rational approximations
+
+Find rational approximations
 
 ### rationale:
 
@@ -15,13 +16,25 @@ fractions or measures using common roots such as sqrt(2)
 
 The function may have other “guessing” applications
 
-The project should look for “toy” problems with exact solutions
+The project should look for 'toy' problems with exact solutions
 which can be better interpreted using ratap()
  
-These “toy”s may be genuinely geometrical for which analytic solutions
+These 'toy's may be genuinely geometrical for which analytic solutions
 are relatively easy to derive but when expressed numerically are
 less obvious
 
+## Future extensions
+
+* ###### Reciprocals
+
+  For example to discover 1/Pi, 6/(5 * e) etc.
+
+* ###### Trigonometric functions
+
+  For example to discover sin, cos etc. values from common angles 
+  such as multiples of 30˚
+  
+* ###### Optional switch between Pi and Tau
 
 ### Examples
 
