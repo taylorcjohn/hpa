@@ -34,12 +34,12 @@ sqrt(2)/2
 
 The function may have other “guessing” applications
 
-The project should look for 'toy' problems with exact solutions
+The project could look for 'toy' problems with exact solutions
 which can be better interpreted using ratap()
- 
-These 'toy's may be genuinely geometrical for which analytic solutions
-are relatively easy to derive but when expressed numerically are
-less obvious
+
+These 'toy's may be have analytic solutions which
+are relatively easy to derive but when the results are expressed 
+numerically the solutions are less obvious
 
 
 #### Future extensions
