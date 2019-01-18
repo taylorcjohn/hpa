@@ -120,7 +120,7 @@ def main(argv):
     time_start = time.time()
 
     thresh = 1e-9
-    numdenmax = 10000
+    numdenmax = 1000
     sm = 3
     cm = 3
     target = math.pi
