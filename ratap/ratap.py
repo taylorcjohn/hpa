@@ -80,7 +80,7 @@ def ratap_p(tval, numdenmax, thresh, fixed, fixed_p):
             n += 1
             d = math.floor( (n * f)/ tval )
             try:
-                t = ( (n * f)/ d ) - tval
+                t = ((n * f)/ d) - tval
             except:
                 t = math.inf
             test()
