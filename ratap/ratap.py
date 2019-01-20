@@ -22,6 +22,7 @@
 import traceback
 import math
 import getopt
+import argparse
 import os
 import sys
 import time
@@ -221,6 +222,11 @@ def main(argv):
                 print("{}{:<25}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
         except:
             pass
+
+        time_end = time.time()
+
+        if args.time:
+            print("{0:0.2f} seconds".format(time_end - time_start))
 
     except:
         traceback.print_exc()
