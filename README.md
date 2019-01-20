@@ -80,7 +80,7 @@ top 2 best approximations to 0.334452913060328
 
 However, if there are common factors the revealed answer may be different.
 For example, dividing 123 by 789 produces 0.155893536121673 but ratap
-shows this to be "approximated`" by 41/263 because 123 and 789 share the
+shows this to be "approximated" by 41/263 because 123 and 789 share the
 factor 3.
 
 Even harder to discover, ratap can find hidden roots and 'special' numbers like Pi and e.
