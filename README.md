@@ -41,6 +41,89 @@ These 'toy's may be have analytic solutions which
 are relatively easy to derive but when the results are expressed 
 numerically the solutions are less obvious
 
+### Magic tricks
+
+I like mathematical games of the "think of a number" variety where the
+"magician" invites someone to think of a number then must apply various
+apparently unrelated numerical operations to their hidden number
+then answer a question about the result.  Miraculously the magician is able
+to reveal the original number.
+
+One good trick involves repeating a three digit number twice which the victim
+may not realise is equivalent to multiplying the original number by 1001.  The
+victim may also not know that 1001 is 7 x 11 x 13.  So by a process of
+disguised operations the original number can be revealed.
+
+This rational approximation program can be used to uncover hidden numbers
+in a similar way but without any manipulation or questioning.  For example,
+the ratio 2589 / 7741 can be "uncovered":
+```
+python ratap.py -x 2 -n 10000 -v 0.334452913060328
+
+top 2 best approximations to 0.334452913060328
+
+ approximation             error                value          
+
+ 2589 / 7741  ratio        0.000000000000000	0.334452913060328
+ 857 / 8103  * sqrt(10)    0.000000000029182	0.334452913089510
+```
+but only when the internal numerator/denominator limit is raised ("-n 10000")
+from the default 1000.  Otherwise the ratio can't be discovered:
+```
+top 2 best approximations to 0.334452913060328
+
+ approximation             error                value          
+
+ 120 / 773  * cbrt(10)     0.000000078923923	0.334452991984251
+ 155 / 964  * cbrt(9)      0.000000398737437	0.334453311797765
+```
+
+Even better, ratap can find hidden roots and 'special' numbers like Pi and e.
+
+For example, 7 / 11 * the cube root of 3 can be "untangled" from the value
+0.917795181104714 which is many orders of magnitude closer to
+(7 / 11) * cbrt(3) than the next best approximation: (453 / 844) * cbrt(5).
+
+However, if there are common factors the revealed answer may be different.
+For example, dividing 123 by 789 produces 0.155893536121673 but ratap
+shows this to be "approximated`" by 41/263 because 123 and 789 share the
+factor 3.
+
+The main disadvantage of this party trick is that it requires very precise
+arithmetic which is likely to be tiresome and error-prone in a party atmosphere.
+
+The original calculation is apparent as the precision is reduced digit by digit:
+```
+0.917795181104714
+0.91779518110471
+0.9177951811047
+0.917795181104
+0.91779518110
+0.9177951811
+0.917795181
+0.91779518
+```
+but the original representation becomes the third most likely
+after removing one more digit:
+```
+top 10 best approximations to 0.9177951
+
+ approximation             error                value          
+
+ 308 / 723  * cbrt(10)     0.000000037662269	0.917795137662269
+ 453 / 844  * cbrt(5)      0.000000046735241	0.917795146735241
+ 7 / 11  * cbrt(3)         0.000000081104714	0.917795181104714
+ 244 / 553  * cbrt(9)     -0.000000429430986	0.917794670569014
+ 178 / 371  * cbrt(7)     -0.000000624168503	0.917794475831497
+ 159 / 245  * sqrt(2)      0.000000640478866	0.917795740478866
+ 159 / 490  * sqrt(8)      0.000000640478866	0.917795740478866
+ 551 / 953  * cbrt(4)     -0.000000787686802	0.917794312313198
+ 448 / 615  * cbrt(2)      0.000001046915290	0.917796146915290
+ 882 / 961  ratio         -0.000001135379813	0.917793964620187
+```
+
+Nevertheless, I think it is surprising that ratap() works as well as it does.
+
 
 #### Future extensions
 
