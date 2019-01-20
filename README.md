@@ -2,7 +2,7 @@
 
 Find rational approximations
 
-### rationale
+### Rationale
 
 To obtain insight into underlying solutions and hints to rôle
 of symmetry
@@ -10,7 +10,7 @@ of symmetry
 This function attempts to find close approximations using simple
 fractions or measures using common roots such as sqrt(2)
 
-### summary
+### Summary
 
 A long time ago I wrote a simple program to find close rational
 approximations to numbers and to show how closely the fractions
