@@ -225,8 +225,8 @@ def main(argv):
 
         time_end = time.time()
 
-        if args.time:
-            print("{0:0.2f} seconds".format(time_end - time_start))
+#        if args.time:
+#            print("{0:0.2f} seconds".format(time_end - time_start))
 
     except:
         traceback.print_exc()
