@@ -78,16 +78,16 @@ top 2 best approximations to 0.334452913060328
  155 / 964  * cbrt(9)      0.000000398737437	0.334453311797765
 ```
 
-Even better, ratap can find hidden roots and 'special' numbers like Pi and e.
-
-For example, 7 / 11 * the cube root of 3 can be "untangled" from the value
-0.917795181104714 which is many orders of magnitude closer to
-(7 / 11) * cbrt(3) than the next best approximation: (453 / 844) * cbrt(5).
-
 However, if there are common factors the revealed answer may be different.
 For example, dividing 123 by 789 produces 0.155893536121673 but ratap
 shows this to be "approximated`" by 41/263 because 123 and 789 share the
 factor 3.
+
+Even harder to discover, ratap can find hidden roots and 'special' numbers like Pi and e.
+
+For example, 7 / 11 * the cube root of 3 can be "untangled" from the value
+0.917795181104714 which is many orders of magnitude closer to
+(7 / 11) * cbrt(3) than the next best approximation: (453 / 844) * cbrt(5).
 
 The main disadvantage of this party trick is that it requires very precise
 arithmetic which is likely to be tiresome and error-prone in a party atmosphere.
