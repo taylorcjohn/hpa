@@ -127,17 +127,11 @@ Nevertheless, I think it is surprising that ratap() works as well as it does.
 
 #### Future extensions
 
-* ###### Reciprocals of special values
-
-  For example to discover 1/Pi, 6/(5 * e) etc.
-
 * ###### Trigonometric functions
 
   For example to discover sin, cos etc. values from common angles 
   such as multiples of 30˚
   
-* ###### Optional switch between Pi and Tau
-
 * ###### Change command line handling from getopt to argparse
   
   Among other advantages argparse provides automatic help
@@ -329,4 +323,25 @@ top 11 best approximations to 1.912931182772389
  537 / 397  * sqrt(2)     -0.000002510242535	1.912928672529854
  537 / 794  * sqrt(8)     -0.000002510242535	1.912928672529854
 
+```
+
+#### python ratap.py -i -v 0.618033988749855
+
+Reciprocal of Phi
+
+```
+top 10 best approximations to 0.618033988749855
+
+ approximation             error                value          
+
+ 1 / 1  over Phi           0.000000000000040	0.618033988749895
+ 253 / 700  * cbrt(5)      0.000000174834723	0.618034163584578
+ 285 / 581  * cbrt(2)     -0.000000427269582	0.618033561480273
+ 610 / 987  ratio          0.000000459071827	0.618034447821682
+ 60 / 307  * sqrt(10)      0.000000733107157	0.618034721857012
+ 377 / 987  * Phi         -0.000000742793715	0.618033245956140
+ 249 / 868  * cbrt(10)     0.000000847445927	0.618034836195782
+ 238 / 667  * sqrt(3)     -0.000000867008637	0.618033121741218
+ 241 / 619  * cbrt(4)      0.000000992711108	0.618034981460963
+ 191 / 757  * sqrt(6)      0.000001071846693	0.618035060596548
 ```
