@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-22 12:30
+# 2019-01-22 12:35
 #
 # ...........................................................................
 #
@@ -19,6 +19,7 @@
 # 2019-01-22 11:00 add enable_pi for consistency (default=True)
 # 2019-01-22 12:15 kwargs passed to ratap()
 # 2019-01-22 12:30 simplify code
+# 2019-01-22 12:35 reciprocals "over"
 #
 # ...........................................................................
 
@@ -48,17 +49,21 @@ def ratap(target, **kwargs):
 
     if kwargs['enable_pi']:
         ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
+        ratap_p(target, numdenmax, thresh, 1.0/math.pi, "over Pi")
 
     if kwargs['enable_tau']:
         tau = math.pi * 2.0
         ratap_p(target, numdenmax, thresh, tau, "* Tau")
+        ratap_p(target, numdenmax, thresh, 1.0/tau, "over Tau")
 
     if kwargs['enable_e']:
         ratap_p(target, numdenmax, thresh, math.e, "* e")
+        ratap_p(target, numdenmax, thresh, 1.0/math.e, "over e")
 
     if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
         ratap_p(target, numdenmax, thresh, phi, "* Phi")
+        ratap_p(target, numdenmax, thresh, 1.0/phi, "over Phi")
 
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
