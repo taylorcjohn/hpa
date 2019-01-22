@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-22 12:15
+# 2019-01-22 12:30
 #
 # ...........................................................................
 #
@@ -18,6 +18,7 @@
 # 2019-01-18 17:30 sign fixes
 # 2019-01-22 11:00 add enable_pi for consistency (default=True)
 # 2019-01-22 12:15 kwargs passed to ratap()
+# 2019-01-22 12:30 simplify code
 #
 # ...........................................................................
 
@@ -42,24 +43,20 @@ def ratap(target, **kwargs):
     sm          = kwargs['sm']
     cm          = kwargs['cm']
     thresh      = kwargs['thresh']
-    enable_pi   = kwargs['enable_pi']
-    enable_phi  = kwargs['enable_phi']
-    enable_e    = kwargs['enable_e']
-    enable_tau  = kwargs['enable_tau']
 
     ratap_p(target, numdenmax, thresh, 1.0, "ratio")
 
-    if enable_pi:
+    if kwargs['enable_pi']:
         ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
 
-    if enable_tau:
+    if kwargs['enable_tau']:
         tau = math.pi * 2.0
         ratap_p(target, numdenmax, thresh, tau, "* Tau")
 
-    if enable_e:
+    if kwargs['enable_e']:
         ratap_p(target, numdenmax, thresh, math.e, "* e")
 
-    if enable_phi:
+    if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
         ratap_p(target, numdenmax, thresh, phi, "* Phi")
 
