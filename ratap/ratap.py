@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-18 17:30
+# 2019-01-22 12:15
 #
 # ...........................................................................
 #
@@ -17,6 +17,7 @@
 # 2019-01-18 12:30 enable_e
 # 2019-01-18 17:30 sign fixes
 # 2019-01-22 11:00 add enable_pi for consistency (default=True)
+# 2019-01-22 12:15 kwargs passed to ratap()
 #
 # ...........................................................................
 
@@ -27,14 +28,24 @@ import argparse
 import os
 import sys
 import time
-
+# for python2:
+# from fractions import gcd
 
 # ...........................................................................
-def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_pi, enable_phi):
+def ratap(target, **kwargs):
 
     global results
 
     results = []
+
+    numdenmax   = kwargs['numdenmax']
+    sm          = kwargs['sm']
+    cm          = kwargs['cm']
+    thresh      = kwargs['thresh']
+    enable_pi   = kwargs['enable_pi']
+    enable_phi  = kwargs['enable_phi']
+    enable_e    = kwargs['enable_e']
+    enable_tau  = kwargs['enable_tau']
 
     ratap_p(target, numdenmax, thresh, 1.0, "ratio")
 
@@ -86,6 +97,7 @@ def ratap_p(tval, numdenmax, thresh, fixed, fixed_p):
                 t = ((n * f)/ d) - tval
             except:
                 t = math.inf
+                # for python2 : t = float("inf")
             test()
 
             d += 1
@@ -108,7 +120,8 @@ def test():
         best = abs(t)
         # print("{} / {}  best {}  value {} gcd {}".format(nb, db, best, nb/db, math.gcd(nb,db)))
 
-        if math.gcd(nb,db) < 2:
+        # greatest common divisor used to avoid redundant ratios
+        if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
             pretty = "{} / {}  {}".format(nb, db, fp)
 
             try:
@@ -137,16 +150,17 @@ def main(argv):
 
     time_start = time.time()
 
+    target = math.pi
     thresh = 1e-9
     numdenmax = 1000
     sm = 10
     cm = 10
-    target = math.pi
     top_n = 10
     enable_e = True
     enable_pi = True
     enable_tau = False
     enable_phi = False
+    rargs = {}
 
     try:
         # ...........................................................................
@@ -155,7 +169,7 @@ def main(argv):
 
         a = argv
 
-        opts, args = getopt.getopt(a[1:], 'hbep2:3:n:t:v:x:')  # @UnusedVariable
+        opts, args = getopt.getopt(a[1:], 'hbeip2:3:n:t:v:x:')  # @UnusedVariable
 
         for opt, arg in opts:
             if opt == '-h':
@@ -188,7 +202,7 @@ def main(argv):
             elif opt in ("-p", "pi"):
                 enable_pi = not enable_pi
 
-            elif opt in ("-h", "phi"):
+            elif opt in ("-i", "phi"):
                 enable_phi = not enable_phi
 
         for arg in args:
@@ -205,7 +219,16 @@ def main(argv):
             tneg = False
             tval = target
 
-        results = ratap(tval, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_pi, enable_phi)
+        rargs ['thresh']     = thresh
+        rargs ['numdenmax']  = numdenmax
+        rargs ['sm']         = sm
+        rargs ['cm']         = cm
+        rargs ['enable_pi']  = enable_pi
+        rargs ['enable_phi'] = enable_phi
+        rargs ['enable_e']   = enable_e
+        rargs ['enable_tau'] = enable_tau
+
+        results = ratap(tval, **rargs)
 
         print("\ntop {} best approximations to {}\n".format(top_n, target))
 
