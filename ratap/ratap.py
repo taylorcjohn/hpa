@@ -16,6 +16,7 @@
 # 2019-01-18 12:10 enable_phi
 # 2019-01-18 12:30 enable_e
 # 2019-01-18 17:30 sign fixes
+# 2019-01-22 11:00 add enable_pi for consistency (default=True)
 #
 # ...........................................................................
 
@@ -29,7 +30,7 @@ import time
 
 
 # ...........................................................................
-def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi):
+def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_pi, enable_phi):
 
     global results
 
@@ -37,14 +38,15 @@ def ratap(target, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi):
 
     ratap_p(target, numdenmax, thresh, 1.0, "ratio")
 
-    ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
-
-    if enable_e:
-        ratap_p(target, numdenmax, thresh, math.e, "* e")
+    if enable_pi:
+        ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
 
     if enable_tau:
         tau = math.pi * 2.0
         ratap_p(target, numdenmax, thresh, tau, "* Tau")
+
+    if enable_e:
+        ratap_p(target, numdenmax, thresh, math.e, "* e")
 
     if enable_phi:
         phi = (1 + 5 ** 0.5) / 2
@@ -142,6 +144,7 @@ def main(argv):
     target = math.pi
     top_n = 10
     enable_e = True
+    enable_pi = True
     enable_tau = False
     enable_phi = False
 
@@ -182,7 +185,10 @@ def main(argv):
             elif opt in ("-b", "tau"):
                 enable_tau = not enable_tau
 
-            elif opt in ("-p", "phi"):
+            elif opt in ("-p", "pi"):
+                enable_pi = not enable_pi
+
+            elif opt in ("-h", "phi"):
                 enable_phi = not enable_phi
 
         for arg in args:
@@ -199,7 +205,7 @@ def main(argv):
             tneg = False
             tval = target
 
-        results = ratap(tval, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_phi)
+        results = ratap(tval, numdenmax, sm, cm, thresh, enable_e, enable_tau, enable_pi, enable_phi)
 
         print("\ntop {} best approximations to {}\n".format(top_n, target))
 
