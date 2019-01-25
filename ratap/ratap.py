@@ -2,7 +2,7 @@
 # ...........................................................................
 # ratap.py
 #
-# 2019-01-22 12:35
+# 2019-01-25 22:00
 #
 # ...........................................................................
 #
@@ -20,6 +20,7 @@
 # 2019-01-22 12:15 kwargs passed to ratap()
 # 2019-01-22 12:30 simplify code
 # 2019-01-22 12:35 reciprocals "over"
+# 2019-01-25 22:00 rearrange
 #
 # ...........................................................................
 
@@ -100,19 +101,19 @@ def ratap_p(tval, numdenmax, thresh, fixed, fixed_p):
             except:
                 t = math.inf
                 # for python2 : t = float("inf")
-            test()
+            test_ratio()
 
             d += 1
 
             t = ((n * f) / d) - tval
-            test()
+            test_ratio()
 
     except:
         traceback.print_exc()
 
 
 # ...........................................................................
-def test():
+def test_ratio():
 
     global n, d, t, nb, db, best, results, f, fp
 
@@ -143,6 +144,43 @@ def usage(argv):
 # ...........................................................................
 def takeSecond(elem):
     return abs(elem[1])
+
+
+# ...........................................................................
+def report(target, top_n, **kwargs):
+    # ...........................................................................
+    # remember if negative
+    # ...........................................................................
+    if (target < 0):
+        tneg = True
+        tval = 0.0 - target
+        sign = "-"
+    else:
+        tneg = False
+        tval = target
+        sign = " "
+
+    results = ratap(tval, **kwargs)
+
+    try:
+        print("\ntop {} best approximations to {}\n".format(top_n, target))
+        print("{:<25}{:23}{:15}\n".format(" approximation","  error", "value"))
+
+        try:
+            for x in range (0, top_n):
+                s = results[x]
+
+                if (s[1] < 0):
+                    errsign = "-"
+                else:
+                    errsign = " "
+
+                print("{}{:<25}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
+        except:
+            pass
+
+    except:
+        traceback.print_exc()
 
 
 # ...........................................................................
@@ -210,17 +248,6 @@ def main(argv):
         for arg in args:
             target = float(arg)
 
-        # ...........................................................................
-        # remember if negative
-        # ...........................................................................
-
-        if (target < 0):
-            tneg = True
-            tval = 0.0 - target
-        else:
-            tneg = False
-            tval = target
-
         rargs ['thresh']     = thresh
         rargs ['numdenmax']  = numdenmax
         rargs ['sm']         = sm
@@ -230,29 +257,7 @@ def main(argv):
         rargs ['enable_e']   = enable_e
         rargs ['enable_tau'] = enable_tau
 
-        results = ratap(tval, **rargs)
-
-        print("\ntop {} best approximations to {}\n".format(top_n, target))
-
-        print("{:<25}{:23}{:15}\n".format(" approximation","  error", "value"))
-
-        try:
-            if tneg:
-                sign = "-"
-            else:
-                sign = " "
-
-            for x in range (0, top_n):
-                s = results[x]
-
-                if (s[1] < 0):
-                    errsign = "-"
-                else:
-                    errsign = " "
-
-                print("{}{:<25}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
-        except:
-            pass
+        report(target, top_n, **rargs)
 
         time_end = time.time()
 
