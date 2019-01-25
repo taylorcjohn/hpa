@@ -194,7 +194,7 @@ def main(argv):
 
             elif opt in ("-x", "top"):
                 top_n = int(arg)
-
+`
             elif opt in ("-e", "exp"):
                 enable_e = not enable_e
 
