@@ -1,6 +1,6 @@
-# ratap
+# hpa : high precision approximation
 
-Find rational approximations
+Find rational approximations and other matches
 
 ### Rationale
 
@@ -35,7 +35,7 @@ sqrt(2)/2
 The function may have other “guessing” applications
 
 The project could look for 'toy' problems with exact solutions
-which can be better interpreted using ratap()
+which can be better interpreted using hpa()
 
 These 'toy's may be have analytic solutions which
 are relatively easy to derive but when the results are expressed 
@@ -58,7 +58,7 @@ This rational approximation program can be used to uncover hidden numbers
 in a similar way but without any manipulation or questioning.  For example,
 the ratio 2589 / 7741 can be "uncovered":
 ```
-python ratap.py -x 2 -n 10000 -v 0.334452913060328
+python hpa.py -x 2 -n 10000 -v 0.334452913060328
 
 top 2 best approximations to 0.334452913060328
 
@@ -79,11 +79,11 @@ top 2 best approximations to 0.334452913060328
 ```
 
 However, if there are common factors the revealed answer may be different.
-For example, dividing 123 by 789 produces 0.155893536121673 but ratap
+For example, dividing 123 by 789 produces 0.155893536121673 but hpa
 shows this to be "approximated" by 41/263 because 123 and 789 share the
 factor 3.
 
-Even harder to discover, ratap can find hidden roots and 'special' numbers like Pi and e.
+Even harder to discover, hpa can find hidden roots and 'special' numbers like Pi and e.
 
 For example, 7 / 11 * the cube root of 3 can be "untangled" from the value
 0.917795181104714 which is many orders of magnitude closer to
@@ -122,7 +122,7 @@ top 10 best approximations to 0.9177951
  882 / 961  ratio         -0.000001135379813	0.917793964620187
 ```
 
-Nevertheless, I think it is surprising that ratap() works as well as it does.
+Nevertheless, I think it is surprising that hpa() works as well as it does.
 
 
 #### Future extensions
@@ -140,7 +140,7 @@ Nevertheless, I think it is surprising that ratap() works as well as it does.
 
 ### Examples
 
-#### python ratap.py
+#### python hpa.py
 
 Note that no numerator/denominator values greater than 1000 are
 considered by default
@@ -163,7 +163,7 @@ top 10 best approximations to 3.141592653589793
  501 / 230  * cbrt(3)      0.000003149558083	3.141595803147876
 ```
 
-#### python ratap.py -x 5 -n 10000 -b
+#### python hpa.py -x 5 -n 10000 -b
 
 -x sets number of approximations
 
@@ -181,7 +181,7 @@ top 10 best approximations to 3.141592653589793
  5211 / 4063  * sqrt(6)    0.000000024146643	3.141592677736436
 ```
 
-#### python ratap.py -v 7.853981633974
+#### python hpa.py -v 7.853981633974
 
 -v value is close to 5/2 * Pi
 
@@ -202,7 +202,7 @@ top 10 best approximations to 7.853981633974
  425 / 121  * sqrt(5)     -0.000023861763994	7.853957772210006
 ```
 
-#### python ratap.py 1.414213562373095
+#### python hpa.py 1.414213562373095
 ```
 top 10 best approximations to 1.414213562373095
 
@@ -220,7 +220,7 @@ top 10 best approximations to 1.414213562373095
  397 / 537  * cbrt(7)      0.000001855803140	1.414215418176235
 ```
 
-#### python ratap.py -v 0.917795181104714 -x 15
+#### python hpa.py -v 0.917795181104714 -x 15
 
 This strange value happens to be 7/11 times the cube root of 3
 ```
@@ -245,9 +245,9 @@ top 15 best approximations to 0.917795181104714
  815 / 888  ratio         -0.000002388311921	0.917792792792793
 ```
 
-#### python ratap.py -v 1.61803398875 -p
+#### python hpa.py -v 1.61803398875 -i
 
--p enables Phi matching (golden ratio)
+-i enables Phi matching (golden ratio)
 ```
 top 10 best approximations to 1.61803398875
 
@@ -265,7 +265,7 @@ top 10 best approximations to 1.61803398875
  516 / 451  * sqrt(2)      0.000001927401923	1.618035916151923
 ```
 
-#### python ratap.py -2 1 -3 1 -e -x 20
+#### python hpa.py -2 1 -3 1 -e -x 20 -p
 
 Display ratios only
 
@@ -298,7 +298,7 @@ top 20 best approximations to 3.141592653589793
  1 / 1  ratio             -2.141592653589793	1.000000000000000
 ```
 
-#### python ratap.py -v 1.912931182772389 -x 11
+#### python hpa.py -v 1.912931182772389 -x 11
 
 Note that the last two approximations are identical
 
@@ -325,7 +325,7 @@ top 11 best approximations to 1.912931182772389
 
 ```
 
-#### python ratap.py -i -v 0.618033988749855
+#### python hpa.py -i -v 0.618033988749855
 
 Reciprocal of Phi
 
