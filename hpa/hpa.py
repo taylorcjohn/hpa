@@ -81,7 +81,7 @@ def hpa(target, **kwargs):
 
 
 # ...........................................................................
-# call with and without recipcocal
+# call with and without reciprocal
 # ...........................................................................
 def hpa_pr(tval, numdenmax, thresh, multiplier, rp, recip):
 
