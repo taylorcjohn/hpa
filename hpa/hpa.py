@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # ...........................................................................
-# ratap.py
+# hpa.py
 #
-# 2019-01-25 22:00
+# 2019-02-03 14:00
 #
 # ...........................................................................
 #
@@ -17,10 +17,11 @@
 # 2019-01-18 12:30 enable_e
 # 2019-01-18 17:30 sign fixes
 # 2019-01-22 11:00 add enable_pi for consistency (default=True)
-# 2019-01-22 12:15 kwargs passed to ratap()
+# 2019-01-22 12:15 kwargs passed to hpa()
 # 2019-01-22 12:30 simplify code
 # 2019-01-22 12:35 reciprocals "over"
 # 2019-01-25 22:00 rearrange
+# 2019-02-03 14:00 rename as hpa
 #
 # ...........................................................................
 
@@ -35,7 +36,7 @@ import time
 # from fractions import gcd
 
 # ...........................................................................
-def ratap(target, **kwargs):
+def hpa(target, **kwargs):
 
     global results
 
@@ -46,40 +47,43 @@ def ratap(target, **kwargs):
     cm          = kwargs['cm']
     thresh      = kwargs['thresh']
 
-    ratap_p(target, numdenmax, thresh, 1.0, "ratio")
+    hpa_p(target, numdenmax, thresh, 1.0, "ratio")
 
-    if kwargs['enable_pi']:
-        ratap_p(target, numdenmax, thresh, math.pi, "* Pi")
-        ratap_p(target, numdenmax, thresh, 1.0/math.pi, "over Pi")
+    for r in range (0,1):
 
-    if kwargs['enable_tau']:
-        tau = math.pi * 2.0
-        ratap_p(target, numdenmax, thresh, tau, "* Tau")
-        ratap_p(target, numdenmax, thresh, 1.0/tau, "over Tau")
+        if kwargs['enable_pi']:
+            hpa_p(target, numdenmax, thresh, math.pi, "* Pi")
+            hpa_p(target, numdenmax, thresh, 1.0/math.pi, "over Pi")
 
-    if kwargs['enable_e']:
-        ratap_p(target, numdenmax, thresh, math.e, "* e")
-        ratap_p(target, numdenmax, thresh, 1.0/math.e, "over e")
+        if kwargs['enable_tau']:
+            tau = math.pi * 2.0
+            hpa_p(target, numdenmax, thresh, tau, "* Tau")
+            hpa_p(target, numdenmax, thresh, 1.0/tau, "over Tau")
 
-    if kwargs['enable_phi']:
-        phi = (1 + 5 ** 0.5) / 2
-        ratap_p(target, numdenmax, thresh, phi, "* Phi")
-        ratap_p(target, numdenmax, thresh, 1.0/phi, "over Phi")
+        if kwargs['enable_e']:
+            hpa_p(target, numdenmax, thresh, math.e, "* e")
+            hpa_p(target, numdenmax, thresh, 1.0/math.e, "over e")
 
-    for s in range (2,sm+1):
-        if (math.sqrt(s)-int(math.sqrt(s)) > 0):
-            ratap_p(target, numdenmax, thresh, math.sqrt(s), "* sqrt({})".format(s))
+        if kwargs['enable_phi']:
+            phi = (1 + 5 ** 0.5) / 2
+            hpa_p(target, numdenmax, thresh, phi, "* Phi")
+            hpa_p(target, numdenmax, thresh, 1.0/phi, "over Phi")
 
-    for s in range (2,cm+1):
-        if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
-            ratap_p(target, numdenmax, thresh, math.pow(s,1.0/3), "* cbrt({})".format(s))
+        for s in range (2,sm+1):
+            if (math.sqrt(s)-int(math.sqrt(s)) > 0):
+                hpa_p(target, numdenmax, thresh, math.sqrt(s), "* sqrt({})".format(s))
+
+        for s in range (2,cm+1):
+            if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
+                hpa_p(target, numdenmax, thresh, math.pow(s,1.0/3), "* cbrt({})".format(s))
 
     results = sorted(results, key=takeSecond, reverse=False)
 
     return results
 
+
 # ...........................................................................
-def ratap_p(tval, numdenmax, thresh, fixed, fixed_p):
+def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
 
     global n, d, t, nb, db, best, results, f, fp, tneg
 
@@ -125,7 +129,7 @@ def test_ratio():
 
         # greatest common divisor used to avoid redundant ratios
         if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
-            pretty = "{} / {}  {}".format(nb, db, fp)
+            pretty = "({} / {})  {}".format(nb, db, fp)
 
             try:
                 results.append ((pretty, t, (nb * f)/ db) )
@@ -160,7 +164,7 @@ def report(target, top_n, **kwargs):
         tval = target
         sign = " "
 
-    results = ratap(tval, **kwargs)
+    results = hpa(tval, **kwargs)
 
     try:
         print("\ntop {} best approximations to {}\n".format(top_n, target))
