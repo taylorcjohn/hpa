@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-03 14:00
+# 2019-02-03 18:00
 #
 # ...........................................................................
 #
@@ -23,6 +23,8 @@
 # 2019-01-25 22:00 rearrange
 # 2019-02-03 14:00 rename as hpa
 # 2019-02-03 14:00 hpa_report
+# 2019-02-03 18:00 output format changes
+# 2019-02-03 18:00 recip is an option -r
 #
 # ...........................................................................
 
@@ -47,30 +49,31 @@ def hpa(target, **kwargs):
     sm          = kwargs['sm']
     cm          = kwargs['cm']
     thresh      = kwargs['thresh']
+    recip       = kwargs['enable_recip']
 
     hpa_p(target, numdenmax, thresh, 1.0, "ratio")
 
     if kwargs['enable_pi']:
-        hpa_pr(target, numdenmax, thresh, math.pi, "Pi")
+        hpa_pr(target, numdenmax, thresh, math.pi, "Pi", recip)
 
     if kwargs['enable_tau']:
         tau = math.pi * 2.0
-        hpa_pr(target, numdenmax, thresh, tau, "Tau")
+        hpa_pr(target, numdenmax, thresh, tau, "Tau", recip)
 
     if kwargs['enable_e']:
-        hpa_pr(target, numdenmax, thresh, math.e, "e")
+        hpa_pr(target, numdenmax, thresh, math.e, "e", recip)
 
     if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
-        hpa_pr(target, numdenmax, thresh, phi, "Phi")
+        hpa_pr(target, numdenmax, thresh, phi, "Phi", recip)
 
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
-            hpa_pr(target, numdenmax, thresh, math.sqrt(s), "sqrt({})".format(s))
+            hpa_pr(target, numdenmax, thresh, math.sqrt(s), "sqrt({})".format(s), recip)
 
     for s in range (2,cm+1):
         if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
-            hpa_pr(target, numdenmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s))
+            hpa_pr(target, numdenmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s), recip)
 
     results = sorted(results, key=takeSecond, reverse=False)
 
@@ -80,10 +83,12 @@ def hpa(target, **kwargs):
 # ...........................................................................
 # call with and without recipcocal
 # ...........................................................................
-def hpa_pr(tval, numdenmax, thresh, multiplier, rp):
+def hpa_pr(tval, numdenmax, thresh, multiplier, rp, recip):
 
     hpa_p(tval, numdenmax, thresh, multiplier, "* " + rp)
-    hpa_p(tval, numdenmax, thresh, 1.0/multiplier, "recip " + rp)
+
+    if recip:
+        hpa_p(tval, numdenmax, thresh, 1.0/multiplier, "* recip " + rp)
 
 
 # ...........................................................................
@@ -172,7 +177,7 @@ def hpa_report(target, top_n, **kwargs):
 
     try:
         print("\ntop {} best approximations to {}\n".format(top_n, target))
-        print("{:<30}{:22}{:15}\n".format(" approximation","  error", "value"))
+        print("{:<35}{:21}{:15}\n".format(" approximation","  error", "value"))
 
         try:
             for x in range (0, top_n):
@@ -183,7 +188,7 @@ def hpa_report(target, top_n, **kwargs):
                 else:
                     errsign = " "
 
-                print("{}{:<30}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
+                print("{}{:<35}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
         except:
             pass
 
@@ -208,6 +213,8 @@ def main(argv):
     enable_pi = True
     enable_tau = False
     enable_phi = False
+    enable_recip = False
+
     rargs = {}
 
     try:
@@ -217,7 +224,7 @@ def main(argv):
 
         a = argv
 
-        opts, args = getopt.getopt(a[1:], 'hbeip2:3:n:t:v:x:')  # @UnusedVariable
+        opts, args = getopt.getopt(a[1:], 'hbeipr2:3:n:t:v:x:')  # @UnusedVariable
 
         for opt, arg in opts:
             if opt == '-h':
@@ -253,17 +260,21 @@ def main(argv):
             elif opt in ("-i", "phi"):
                 enable_phi = not enable_phi
 
+            elif opt in ("-r", "recip"):
+                enable_recip = not enable_recip
+
         for arg in args:
             target = float(arg)
 
-        rargs ['thresh']     = thresh
-        rargs ['numdenmax']  = numdenmax
-        rargs ['sm']         = sm
-        rargs ['cm']         = cm
-        rargs ['enable_pi']  = enable_pi
-        rargs ['enable_phi'] = enable_phi
-        rargs ['enable_e']   = enable_e
-        rargs ['enable_tau'] = enable_tau
+        rargs ['thresh']       = thresh
+        rargs ['numdenmax']    = numdenmax
+        rargs ['sm']           = sm
+        rargs ['cm']           = cm
+        rargs ['enable_pi']    = enable_pi
+        rargs ['enable_phi']   = enable_phi
+        rargs ['enable_e']     = enable_e
+        rargs ['enable_tau']   = enable_tau
+        rargs ['enable_recip'] = enable_recip
 
         hpa_report(target, top_n, **rargs)
 
