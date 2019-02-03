@@ -49,33 +49,27 @@ def hpa(target, **kwargs):
 
     hpa_p(target, numdenmax, thresh, 1.0, "ratio")
 
-    for r in range (0,1):
+    if kwargs['enable_pi']:
+        hpa_pr(target, numdenmax, thresh, math.pi, "Pi")
 
-        if kwargs['enable_pi']:
-            hpa_p(target, numdenmax, thresh, math.pi, "* Pi")
-            hpa_p(target, numdenmax, thresh, 1.0/math.pi, "over Pi")
+    if kwargs['enable_tau']:
+        tau = math.pi * 2.0
+        hpa_pr(target, numdenmax, thresh, tau, "Tau")
 
-        if kwargs['enable_tau']:
-            tau = math.pi * 2.0
-            hpa_p(target, numdenmax, thresh, tau, "* Tau")
-            hpa_p(target, numdenmax, thresh, 1.0/tau, "over Tau")
+    if kwargs['enable_e']:
+        hpa_pr(target, numdenmax, thresh, math.e, "e")
 
-        if kwargs['enable_e']:
-            hpa_p(target, numdenmax, thresh, math.e, "* e")
-            hpa_p(target, numdenmax, thresh, 1.0/math.e, "over e")
+    if kwargs['enable_phi']:
+        phi = (1 + 5 ** 0.5) / 2
+        hpa_pr(target, numdenmax, thresh, phi, "Phi")
 
-        if kwargs['enable_phi']:
-            phi = (1 + 5 ** 0.5) / 2
-            hpa_p(target, numdenmax, thresh, phi, "* Phi")
-            hpa_p(target, numdenmax, thresh, 1.0/phi, "over Phi")
+    for s in range (2,sm+1):
+        if (math.sqrt(s)-int(math.sqrt(s)) > 0):
+            hpa_pr(target, numdenmax, thresh, math.sqrt(s), "sqrt({})".format(s))
 
-        for s in range (2,sm+1):
-            if (math.sqrt(s)-int(math.sqrt(s)) > 0):
-                hpa_p(target, numdenmax, thresh, math.sqrt(s), "* sqrt({})".format(s))
-
-        for s in range (2,cm+1):
-            if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
-                hpa_p(target, numdenmax, thresh, math.pow(s,1.0/3), "* cbrt({})".format(s))
+    for s in range (2,cm+1):
+        if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
+            hpa_pr(target, numdenmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s))
 
     results = sorted(results, key=takeSecond, reverse=False)
 
@@ -83,9 +77,18 @@ def hpa(target, **kwargs):
 
 
 # ...........................................................................
+# call with and without recipcocal
+# ...........................................................................
+def hpa_pr(tval, numdenmax, thresh, multiplier, rp):
+
+    hpa_p(tval, numdenmax, thresh, multiplier, "* " + rp)
+    hpa_p(tval, numdenmax, thresh, 1.0/multiplier, "recip " + rp)
+
+
+# ...........................................................................
 def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
 
-    global n, d, t, nb, db, best, results, f, fp, tneg
+    global n, d, t, nb, db, best, results, f, fp
 
     best = 1e6
     f = fixed
@@ -168,7 +171,7 @@ def report(target, top_n, **kwargs):
 
     try:
         print("\ntop {} best approximations to {}\n".format(top_n, target))
-        print("{:<25}{:23}{:15}\n".format(" approximation","  error", "value"))
+        print("{:<30}{:22}{:15}\n".format(" approximation","  error", "value"))
 
         try:
             for x in range (0, top_n):
@@ -179,7 +182,7 @@ def report(target, top_n, **kwargs):
                 else:
                     errsign = " "
 
-                print("{}{:<25}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
+                print("{}{:<30}{}{:.15f}\t{:.15f}".format(sign, s[0], errsign, abs(s[1]), s[2]))
         except:
             pass
 
@@ -190,7 +193,7 @@ def report(target, top_n, **kwargs):
 # ...........................................................................
 def main(argv):
 
-    global timing, tval, tneg
+    global timing, tval
 
     time_start = time.time()
 
