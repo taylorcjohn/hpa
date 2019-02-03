@@ -22,6 +22,7 @@
 # 2019-01-22 12:35 reciprocals "over"
 # 2019-01-25 22:00 rearrange
 # 2019-02-03 14:00 rename as hpa
+# 2019-02-03 14:00 hpa_report
 #
 # ...........................................................................
 
@@ -154,7 +155,7 @@ def takeSecond(elem):
 
 
 # ...........................................................................
-def report(target, top_n, **kwargs):
+def hpa_report(target, top_n, **kwargs):
     # ...........................................................................
     # remember if negative
     # ...........................................................................
@@ -264,7 +265,7 @@ def main(argv):
         rargs ['enable_e']   = enable_e
         rargs ['enable_tau'] = enable_tau
 
-        report(target, top_n, **rargs)
+        hpa_report(target, top_n, **rargs)
 
         time_end = time.time()
 
