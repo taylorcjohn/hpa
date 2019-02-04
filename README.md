@@ -136,11 +136,17 @@ Nevertheless, I think it is surprising that hpa() works as well as it does.
   For example to discover sin, cos etc. values from common angles 
   such as multiples of 30˚
   
-* ###### Change command line handling from getopt to argparse
-  
-  Among other advantages argparse provides automatic help
-
 * ###### Improve in-code documentation
+
+* ###### Remove mathematically equivalent results
+
+  Sometimes two or more results are equivalent (but may differ in value slightly due to rounding)
+  
+  For example
+  ```
+  (16 / 1)  * recip cbrt(3)           0.000000000000000	11.093780389610156
+  (16 / 3)  * cbrt(9)                -0.000000000000002	11.093780389610155
+  ```
 
 ### Usage
 ```
