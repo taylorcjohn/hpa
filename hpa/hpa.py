@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-03 18:00
+# 2019-02-04 16:20
 #
 # ...........................................................................
 #
@@ -25,6 +25,7 @@
 # 2019-02-03 14:00 hpa_report
 # 2019-02-03 18:00 output format changes
 # 2019-02-03 18:00 recip is an option -r
+# 2019-02-04 16:20 switch to argparse
 #
 # ...........................................................................
 
@@ -37,6 +38,10 @@ import sys
 # for python2:
 # from fractions import gcd
 
+# ...........................................................................
+# high precision approximation
+#
+# return sorted list of triplets : [text of approximation, error, actual value]
 # ...........................................................................
 def hpa(target, **kwargs):
 
@@ -159,6 +164,8 @@ def takeSecond(elem):
 
 
 # ...........................................................................
+# call hpa and report result set
+# ...........................................................................
 def hpa_report(target, top_n, **kwargs):
     # ...........................................................................
     # remember if negative
@@ -215,16 +222,12 @@ def main(argv):
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
         parser.add_argument('-3', '--cbrt',     action='store', type=int, default=10,   help='cube root max integer value')
-        parser.add_argument('-x', '--top',      action='store', type=int, default=10,   help='cube root max integer value')
+        parser.add_argument('-x', '--top',      action='store', type=int, default=10,   help='number of approximations')
         parser.add_argument('-t', '--thr',      action='store', type=float, default=1e-9,    help='sensitivity threshold value')
-        parser.add_argument('-v', '--val',      action='store', type=float, default=math.pi, help='value to approximate')
-        parser.add_argument('value', nargs='?', action='store', type=float, default=math.pi, help='value to approximate')
+        parser.add_argument('-v', '--val',      action='store', type=float, default=None, help='value to approximate')
+        parser.add_argument('value', nargs='?', action='store', type=float, default=None, help='value to approximate')
 
         args = parser.parse_args()
-
-        if args.val == None:
-            print("no value given")
-            sys.exit(1)
 
         rargs = {}
         rargs['thr']          = args.thr
@@ -236,12 +239,14 @@ def main(argv):
         rargs['enable_e']     = args.e
         rargs['enable_tau']   = args.tau
         rargs['enable_recip'] = args.r
-
-        rargs['val'] = args.val
+        if args.val is None:
+            args.val = args.value
 
         # ...........................................................................
         # call hpa
         # ...........................................................................
+        if args.val is None:
+            args.val = math.pi
 
         target = args.val
         top_n = args.top
@@ -249,7 +254,7 @@ def main(argv):
         hpa_report(target, top_n, **rargs)
 
     except:
-        sys.exit(0)
+        pass
 #        traceback.print_exc()
 
 
