@@ -140,7 +140,7 @@ Nevertheless, I think it is surprising that hpa() works as well as it does.
 
 ### Examples
 
-#### python hpa.py
+    #### python hpa.py
 
 Note that no numerator/denominator values greater than 1000 are
 considered by default

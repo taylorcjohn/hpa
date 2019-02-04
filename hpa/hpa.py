@@ -34,7 +34,6 @@ import getopt
 import argparse
 import os
 import sys
-import time
 # for python2:
 # from fractions import gcd
 
@@ -45,35 +44,35 @@ def hpa(target, **kwargs):
 
     results = []
 
-    numdenmax   = kwargs['numdenmax']
-    sm          = kwargs['sm']
-    cm          = kwargs['cm']
-    thresh      = kwargs['thresh']
-    recip       = kwargs['enable_recip']
+    ndmax   = kwargs['ndmx']
+    sm      = kwargs['sm']
+    cm      = kwargs['cm']
+    thresh  = kwargs['thr']
+    recip   = kwargs['enable_recip']
 
-    hpa_p(target, numdenmax, thresh, 1.0, "ratio")
+    hpa_p(target, ndmax, thresh, 1.0, "ratio")
 
     if kwargs['enable_pi']:
-        hpa_pr(target, numdenmax, thresh, math.pi, "Pi", recip)
+        hpa_pr(target, ndmax, thresh, math.pi, "Pi", recip)
 
     if kwargs['enable_tau']:
         tau = math.pi * 2.0
-        hpa_pr(target, numdenmax, thresh, tau, "Tau", recip)
+        hpa_pr(target, ndmax, thresh, tau, "Tau", recip)
 
     if kwargs['enable_e']:
-        hpa_pr(target, numdenmax, thresh, math.e, "e", recip)
+        hpa_pr(target, ndmax, thresh, math.e, "e", recip)
 
     if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
-        hpa_pr(target, numdenmax, thresh, phi, "Phi", recip)
+        hpa_pr(target, ndmax, thresh, phi, "Phi", recip)
 
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
-            hpa_pr(target, numdenmax, thresh, math.sqrt(s), "sqrt({})".format(s), recip)
+            hpa_pr(target, ndmax, thresh, math.sqrt(s), "sqrt({})".format(s), recip)
 
     for s in range (2,cm+1):
         if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
-            hpa_pr(target, numdenmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s), recip)
+            hpa_pr(target, ndmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s), recip)
 
     results = sorted(results, key=takeSecond, reverse=False)
 
@@ -201,90 +200,58 @@ def main(argv):
 
     global timing, tval
 
-    time_start = time.time()
-
-    target = math.pi
-    thresh = 1e-9
-    numdenmax = 1000
-    sm = 10
-    cm = 10
-    top_n = 10
-    enable_e = True
-    enable_pi = True
-    enable_tau = False
-    enable_phi = False
-    enable_recip = False
-
-    rargs = {}
-
     try:
         # ...........................................................................
-        # getopt command line argument handling
+        # argparse command line argument handling
+        # ...........................................................................
+        parser = argparse.ArgumentParser(description='hpa : high precision approximation')
+
+        parser.add_argument('-p', '--pi',  action='store_true', default=False, help='enable Pi matching')
+        parser.add_argument('-i', '--phi', action='store_true', default=False, help='enable Phi matching')
+        parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
+        parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
+        parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
+
+        parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
+        parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
+        parser.add_argument('-3', '--cbrt',     action='store', type=int, default=10,   help='cube root max integer value')
+        parser.add_argument('-x', '--top',      action='store', type=int, default=10,   help='cube root max integer value')
+        parser.add_argument('-t', '--thr',      action='store', type=float, default=1e-9,    help='sensitivity threshold value')
+        parser.add_argument('-v', '--val',      action='store', type=float, default=math.pi, help='value to approximate')
+        parser.add_argument('value', nargs='?', action='store', type=float, default=math.pi, help='value to approximate')
+
+        args = parser.parse_args()
+
+        if args.val == None:
+            print("no value given")
+            sys.exit(1)
+
+        rargs = {}
+        rargs['thr']          = args.thr
+        rargs['ndmx']         = args.ndmx
+        rargs['sm']           = args.sqrt
+        rargs['cm']           = args.cbrt
+        rargs['enable_pi']    = args.pi
+        rargs['enable_phi']   = args.phi
+        rargs['enable_e']     = args.e
+        rargs['enable_tau']   = args.tau
+        rargs['enable_recip'] = args.r
+
+        rargs['val'] = args.val
+
+        # ...........................................................................
+        # call hpa
         # ...........................................................................
 
-        a = argv
-
-        opts, args = getopt.getopt(a[1:], 'hbeipr2:3:n:t:v:x:')  # @UnusedVariable
-
-        for opt, arg in opts:
-            if opt == '-h':
-                usage( argv )
-
-            elif opt in ("-t", "thresh"):
-                thresh = float(arg)
-
-            elif opt in ("-n", "numdenmax"):
-                numdenmax = int(arg)
-
-            elif opt in ("-2", "sqrtmax"):
-                sm = int(arg)
-
-            elif opt in ("-3", "cubemax"):
-                cm = int(arg)
-
-            elif opt in ("-v", "value"):
-                target = float(arg)
-
-            elif opt in ("-x", "top"):
-                top_n = int(arg)
-
-            elif opt in ("-e", "exp"):
-                enable_e = not enable_e
-
-            elif opt in ("-b", "tau"):
-                enable_tau = not enable_tau
-
-            elif opt in ("-p", "pi"):
-                enable_pi = not enable_pi
-
-            elif opt in ("-i", "phi"):
-                enable_phi = not enable_phi
-
-            elif opt in ("-r", "recip"):
-                enable_recip = not enable_recip
-
-        for arg in args:
-            target = float(arg)
-
-        rargs ['thresh']       = thresh
-        rargs ['numdenmax']    = numdenmax
-        rargs ['sm']           = sm
-        rargs ['cm']           = cm
-        rargs ['enable_pi']    = enable_pi
-        rargs ['enable_phi']   = enable_phi
-        rargs ['enable_e']     = enable_e
-        rargs ['enable_tau']   = enable_tau
-        rargs ['enable_recip'] = enable_recip
+        target = args.val
+        top_n = args.top
 
         hpa_report(target, top_n, **rargs)
 
-        time_end = time.time()
-
-#        if args.time:
-#            print("{0:0.2f} seconds".format(time_end - time_start))
-
     except:
-        traceback.print_exc()
+        sys.exit(0)
+#        traceback.print_exc()
+
 
 # ...........................................................................
 
