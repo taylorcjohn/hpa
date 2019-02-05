@@ -131,6 +131,13 @@ Nevertheless, I think it is surprising that hpa() works as well as it does.
 
 #### Future extensions
 
+* ###### settings output
+
+  It should be possible to display the settings used in a particular run, in both abbreviated and
+  verbose form
+  
+  For example, to show the current values of the numerator/denominator limit, booleans enable_recip, enable_pi etc.
+
 * ###### Trigonometric functions
 
   For example to discover sin, cos etc. values from common angles 
