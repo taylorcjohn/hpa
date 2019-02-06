@@ -150,8 +150,8 @@ Nevertheless, I think it is surprising that hpa() works as well as it does.
 
 ### Usage
 ```
-usage: hpa.py [-h] [-p] [-i] [-b] [-e] [-r] [-n NDMX] [-2 SQRT] [-3 CBRT]
-              [-x TOP] [-t THR] [-v VAL]
+usage: hpa.py [-h] [-p] [-i] [-b] [-e] [-r] [-s] [-S] [-n NDMX] [-2 SQRT]
+              [-3 CBRT] [-x TOP] [-t THR] [-v VAL]
               [value]
 
 hpa : high precision approximation
@@ -166,13 +166,15 @@ optional arguments:
   -b, --tau             enable Tau matching
   -e, --e               enable e matching
   -r, --r               enable reciprocal matching
+  -s, --s               show settings
+  -S, --S               show verbose settings
   -n NDMX, --ndmx NDMX  numerator and denominator limit
   -2 SQRT, --sqrt SQRT  square root max integer value
   -3 CBRT, --cbrt CBRT  cube root max integer value
   -x TOP, --top TOP     number of approximations
   -t THR, --thr THR     sensitivity threshold value
   -v VAL, --val VAL     value to approximate
-```
+ ```
 
 ### Examples
 
