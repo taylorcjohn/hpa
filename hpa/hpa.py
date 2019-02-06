@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-04 16:20
+# 2019-02-06 18:30
 #
 # ...........................................................................
 #
@@ -26,6 +26,7 @@
 # 2019-02-03 18:00 output format changes
 # 2019-02-03 18:00 recip is an option -r
 # 2019-02-04 16:20 switch to argparse
+# 2019-02-06 18:30 show settings using -s or -S for verbose
 #
 # ...........................................................................
 
@@ -45,9 +46,12 @@ import sys
 # ...........................................................................
 def hpa(target, **kwargs):
 
-    global results
+    global results, settings_short, settings_verbose
 
     results = []
+
+    settings_short = ""
+    settings_verbose = []
 
     ndmax   = kwargs['ndmx']
     sm      = kwargs['sm']
@@ -56,20 +60,39 @@ def hpa(target, **kwargs):
     recip   = kwargs['enable_recip']
 
     hpa_p(target, ndmax, thresh, 1.0, "ratio")
+    settings_short = "settings: nd {} sm {} cm {}".format(ndmax, sm, cm)
 
-    if kwargs['enable_pi']:
-        hpa_pr(target, ndmax, thresh, math.pi, "Pi", recip)
+    settings_verbose.append("{:<35} : {}".format("numerator/denominator limit", ndmax))
 
-    if kwargs['enable_tau']:
-        tau = math.pi * 2.0
-        hpa_pr(target, ndmax, thresh, tau, "Tau", recip)
+    settings_verbose.append("{:<35} : {}".format("square root max", sm))
+
+    settings_verbose.append("{:<35} : {}".format("cube root max", cm))
+
+    if recip:
+        settings_short = settings_short + " recip"
+        settings_verbose.append("{:<35} : {}".format("matching reciprocals", True))
 
     if kwargs['enable_e']:
         hpa_pr(target, ndmax, thresh, math.e, "e", recip)
+        settings_short = settings_short + " e"
+        settings_verbose.append("{:<35} : {}".format("matching e", True))
+
+    if kwargs['enable_pi']:
+        hpa_pr(target, ndmax, thresh, math.pi, "Pi", recip)
+        settings_short = settings_short + " pi"
+        settings_verbose.append("{:<35} : {}".format("matching pi", True))
 
     if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
         hpa_pr(target, ndmax, thresh, phi, "Phi", recip)
+        settings_short = settings_short + " phi"
+        settings_verbose.append("{:<35} : {}".format("matching phi", True))
+
+    if kwargs['enable_tau']:
+        tau = math.pi * 2.0
+        hpa_pr(target, ndmax, thresh, tau, "Tau", recip)
+        settings_short = settings_short + " tau"
+        settings_verbose.append("{:<35} : {}".format("matching tau", True))
 
     for s in range (2,sm+1):
         if (math.sqrt(s)-int(math.sqrt(s)) > 0):
@@ -167,6 +190,9 @@ def takeSecond(elem):
 # call hpa and report result set
 # ...........................................................................
 def hpa_report(target, top_n, **kwargs):
+
+    global settings_short, settings_verbose
+
     # ...........................................................................
     # remember if negative
     # ...........................................................................
@@ -182,7 +208,16 @@ def hpa_report(target, top_n, **kwargs):
     results = hpa(tval, **kwargs)
 
     try:
-        print("\ntop {} best approximations to {}\n".format(top_n, target))
+        if kwargs['settings']:
+            print("")
+            print(" {:<35}".format(settings_short))
+
+        if kwargs['verbose']:
+            print("")
+            for s in settings_verbose:
+                print(" {:<35}".format(s))
+
+        print("\n top {} best approximations to {}\n".format(top_n, target))
         print("{:<35}{:21}{:15}\n".format(" approximation","  error", "value"))
 
         try:
@@ -205,7 +240,9 @@ def hpa_report(target, top_n, **kwargs):
 # ...........................................................................
 def main(argv):
 
-    global timing, tval
+    global timing, tval, settings_short
+
+    settings_short = None
 
     try:
         # ...........................................................................
@@ -218,12 +255,14 @@ def main(argv):
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
         parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
+        parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
+        parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
         parser.add_argument('-3', '--cbrt',     action='store', type=int, default=10,   help='cube root max integer value')
         parser.add_argument('-x', '--top',      action='store', type=int, default=10,   help='number of approximations')
-        parser.add_argument('-t', '--thr',      action='store', type=float, default=1e-9,    help='sensitivity threshold value')
+        parser.add_argument('-t', '--thr',      action='store', type=float, default=1e-9, help='sensitivity threshold value')
         parser.add_argument('-v', '--val',      action='store', type=float, default=None, help='value to approximate')
         parser.add_argument('value', nargs='?', action='store', type=float, default=None, help='value to approximate')
 
@@ -239,6 +278,9 @@ def main(argv):
         rargs['enable_e']     = args.e
         rargs['enable_tau']   = args.tau
         rargs['enable_recip'] = args.r
+        rargs['settings']     = args.s
+        rargs['verbose']      = args.S
+
         if args.val is None:
             args.val = args.value
 
@@ -255,7 +297,7 @@ def main(argv):
 
     except:
         pass
-#        traceback.print_exc()
+        traceback.print_exc()
 
 
 # ...........................................................................
