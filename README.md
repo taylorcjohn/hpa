@@ -137,7 +137,7 @@ information but in a longer form.
 
 For example, the short form:
 ```
-hpa.py -p -i -b -e -r -n 100 -2 8 -3 7 -s
+hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -s
 
  settings: nd 100 sm 8 cm 7 recip e pi phi tau
 
@@ -158,7 +158,7 @@ hpa.py -p -i -b -e -r -n 100 -2 8 -3 7 -s
 ```
 the long form:
 ```
-hpa.py -p -i -b -e -r -n 100 -2 8 -3 7 -S
+hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
 
  numerator/denominator limit         : 100
  square root max                     : 8
