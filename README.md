@@ -129,16 +129,16 @@ top 10 best approximations to 0.9177951
 Nevertheless, I think it is surprising that hpa() works as well as it does.
 
 
-#### Future extensions
+### Future extensions
 
-* ###### Trigonometric functions
+* ##### Trigonometric functions
 
   For example to discover sin, cos etc. values from common angles 
   such as multiples of 30˚
   
-* ###### Improve in-code documentation
+* ##### Improve in-code documentation
 
-* ###### Remove mathematically equivalent results
+* ##### Remove mathematically equivalent results
 
   Sometimes two or more results are equivalent (but may differ in value slightly due to rounding)
   

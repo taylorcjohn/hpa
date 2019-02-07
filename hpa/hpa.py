@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-06 18:40
+# 2019-02-07 09:45
 #
 # ...........................................................................
 #
@@ -28,6 +28,7 @@
 # 2019-02-04 16:20 switch to argparse
 # 2019-02-06 18:30 show settings using -s or -S for verbose
 # 2019-02-06 18:40 remove traceback for clean help
+# 2019-02-07 09:45 clarify skip squares 4, 9, 16 cubes 8, 27 etc. -s True by default
 #
 # ...........................................................................
 
@@ -96,11 +97,17 @@ def hpa(target, **kwargs):
         settings_verbose.append("{:<35} : {}".format("matching tau", True))
 
     for s in range (2,sm+1):
-        if (math.sqrt(s)-int(math.sqrt(s)) > 0):
+        a = math.sqrt(s)
+        b = int(math.sqrt(s))
+        # skip squares 4, 9, 16 etc
+        if a > b:
             hpa_pr(target, ndmax, thresh, math.sqrt(s), "sqrt({})".format(s), recip)
 
     for s in range (2,cm+1):
-        if (math.pow(s,1.0/3)-int(math.pow(s,1.0/3)) > 0):
+        a = math.pow(s,1.0/3)
+        b = int(math.pow(s,1.0/3))
+        # skip cubes 8, 27 etc
+        if a > b:
             hpa_pr(target, ndmax, thresh, math.pow(s,1.0/3), "cbrt({})".format(s), recip)
 
     results = sorted(results, key=takeSecond, reverse=False)
@@ -256,7 +263,7 @@ def main(argv):
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
         parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
-        parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
+        parser.add_argument('-s', '--s',   action='store_true', default=True,  help='show settings')
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
