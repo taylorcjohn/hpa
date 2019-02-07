@@ -263,7 +263,7 @@ def main(argv):
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
         parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
-        parser.add_argument('-s', '--s',   action='store_true', default=True,  help='show settings')
+        parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
