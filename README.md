@@ -128,6 +128,63 @@ top 10 best approximations to 0.9177951
 
 Nevertheless, I think it is surprising that hpa() works as well as it does.
 
+### Settings display
+
+hpa offers two ways to show the settings: -s (settings) and -S (verbose settings)
+
+The first shows the current settings in abbreviated form on one line before the "top" line.  The second form shows the same
+information but in a longer form.
+
+For example, the short form:
+```
+hpa.py -p -i -b -e -r -n 100 -2 8 -3 7 -s
+
+ settings: nd 100 sm 8 cm 7 recip e pi phi tau
+
+ top 10 best approximations to 3.141592653589793
+
+ approximation                       error              value          
+
+ (1 / 1)  * Pi                       0.000000000000000	3.141592653589793
+ (1 / 2)  * Tau                      0.000000000000000	3.141592653589793
+ (79 / 43)  * cbrt(5)               -0.000008937602373	3.141583715987420
+ (61 / 12)  * recip Phi              0.000080122555505	3.141672776145298
+ (95 / 24)  * recip cbrt(2)          0.000138595097269	3.141731248687062
+ (95 / 48)  * cbrt(4)                0.000138595097269	3.141731248687062
+ (59 / 46)  * sqrt(6)                0.000144190414717	3.141736844004511
+ (19 / 16)  * sqrt(7)                0.000237028299408	3.141829681889202
+ (78 / 43)  * sqrt(3)                0.000266950837473	3.141859604427266
+ (89 / 77)  * e                      0.000317511771960	3.141910165361753
+```
+the long form:
+```
+hpa.py -p -i -b -e -r -n 100 -2 8 -3 7 -S
+
+ numerator/denominator limit         : 100
+ square root max                     : 8
+ cube root max                       : 7
+ matching reciprocals                : True
+ matching e                          : True
+ matching pi                         : True
+ matching phi                        : True
+ matching tau                        : True
+ 
+ top 10 best approximations to 3.141592653589793
+
+ approximation                       error              value          
+
+ (1 / 1)  * Pi                       0.000000000000000	3.141592653589793
+ (1 / 2)  * Tau                      0.000000000000000	3.141592653589793
+ (79 / 43)  * cbrt(5)               -0.000008937602373	3.141583715987420
+ (61 / 12)  * recip Phi              0.000080122555505	3.141672776145298
+ (95 / 24)  * recip cbrt(2)          0.000138595097269	3.141731248687062
+ (95 / 48)  * cbrt(4)                0.000138595097269	3.141731248687062
+ (59 / 46)  * sqrt(6)                0.000144190414717	3.141736844004511
+ (19 / 16)  * sqrt(7)                0.000237028299408	3.141829681889202
+ (78 / 43)  * sqrt(3)                0.000266950837473	3.141859604427266
+ (89 / 77)  * e                      0.000317511771960	3.141910165361753
+```
+
 
 ### Future extensions
 
