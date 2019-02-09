@@ -34,7 +34,6 @@
 
 import traceback
 import math
-import getopt
 import argparse
 import os
 import sys
