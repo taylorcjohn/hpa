@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-07 09:45
+# 2019-02-10 21:00
 #
 # ...........................................................................
 #
@@ -29,6 +29,7 @@
 # 2019-02-06 18:30 show settings using -s or -S for verbose
 # 2019-02-06 18:40 remove traceback for clean help
 # 2019-02-07 09:45 clarify skip squares 4, 9, 16 cubes 8, 27 etc. -s True by default
+# 2019-02-10 21:00 math.inf and gcd changed for 2.7 compatibility
 #
 # ...........................................................................
 
@@ -38,7 +39,7 @@ import argparse
 import os
 import sys
 # for python2:
-# from fractions import gcd
+from fractions import gcd
 
 # ...........................................................................
 # high precision approximation
@@ -146,8 +147,8 @@ def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
             try:
                 t = ((n * f)/ d) - tval
             except:
-                t = math.inf
-                # for python2 : t = float("inf")
+                # t = math.inf
+                t = float("inf")
             test_ratio()
 
             d += 1
@@ -171,7 +172,8 @@ def test_ratio():
         # print("{} / {}  best {}  value {} gcd {}".format(nb, db, best, nb/db, math.gcd(nb,db)))
 
         # greatest common divisor used to avoid redundant ratios
-        if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
+        # if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
+        if gcd(nb, db) < 2:
             pretty = "({} / {})  {}".format(nb, db, fp)
 
             try:
