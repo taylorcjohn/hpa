@@ -21,11 +21,11 @@ import os
 def main(argv):
     try:
 
-        print("\ngetcwd :{0}".format(os.getcwd()))
+        # print("\ngetcwd :{0}".format(os.getcwd()))
         print('')
-        files_path = [os.path.abspath(x) for x in os.listdir()]
-        for x in files_path:
-            print("{0}".format(x))
+        # files_path = [os.path.abspath(x) for x in os.listdir()]
+        for x in sorted(os.environ):
+            print("{0}\t{1}".format(x, os.environ.get(x)))
 
         # print("{0}".format(sys.version_info))
         # print("default encoding {0}".format(sys.getdefaultencoding()))        # print("maximu# m Unicode code point {0}".format(hex(sys.maxunicode)))
