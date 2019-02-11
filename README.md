@@ -1,5 +1,8 @@
 <!--
-generate PDF with table of contents: 
+2018-02-11 13:50
+
+Generate PDF with table of contents: 
+
 pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 -->
 
