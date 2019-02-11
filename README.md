@@ -1,3 +1,8 @@
+<!--
+generate PDF with table of contents: 
+pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
+-->
+
 # hpa : high precision approximation
 
 Find rational approximations and other matches to floating point values.
@@ -188,14 +193,14 @@ hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
 
 ### Future extensions
 
-* ##### Trigonometric functions
+* #### Trigonometric functions
 
   For example to discover sin, cos etc. values from common angles 
   such as multiples of 30˚
   
-* ##### Improve in-code documentation
+* #### Improve in-code documentation
 
-* ##### Remove mathematically equivalent results
+* #### Remove mathematically equivalent results
 
   Sometimes two or more results are equivalent (but may differ in value slightly due to rounding)
   
@@ -206,6 +211,7 @@ hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
   ```
 
 ### Usage
+
 ```
 usage: hpa.py [-h] [-p] [-i] [-b] [-e] [-r] [-s] [-S] [-n NDMX] [-2 SQRT]
               [-3 CBRT] [-x TOP] [-t THR] [-v VAL]
@@ -231,7 +237,7 @@ optional arguments:
   -x TOP, --top TOP     number of approximations
   -t THR, --thr THR     sensitivity threshold value
   -v VAL, --val VAL     value to approximate
- ```
+```
 
 ### Examples
 
