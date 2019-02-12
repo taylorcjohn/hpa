@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-10 21:00
+# 2019-02-12 12:00
 #
 # ...........................................................................
 #
@@ -30,6 +30,7 @@
 # 2019-02-06 18:40 remove traceback for clean help
 # 2019-02-07 09:45 clarify skip squares 4, 9, 16 cubes 8, 27 etc. -s True by default
 # 2019-02-10 21:00 math.inf and gcd changed for 2.7 compatibility
+# 2019-02-12 12:00 PY3 and pretty :0.0f needed for python2 compatibility
 #
 # ...........................................................................
 
@@ -137,8 +138,8 @@ def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
     n = 0
     d = 0
     t = 0.0
-    nb = 0.0
-    db = 0.0
+    nb = 0
+    db = 0
 
     try:
         while (max(n,d) < numdenmax) & (best > thresh):
@@ -163,18 +164,30 @@ def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
 # ...........................................................................
 def test_ratio():
 
-    global n, d, t, nb, db, best, results, f, fp
+    global PY3, n, d, t, nb, db, best, results, f, fp
 
     if ( abs(t) < best ):
         nb = n
         db = d
         best = abs(t)
-        # print("{} / {}  best {}  value {} gcd {}".format(nb, db, best, nb/db, math.gcd(nb,db)))
 
         # greatest common divisor used to avoid redundant ratios
+        # print("{} / {}  best {}  value {} gcd {}".format(nb, db, best, nb/db, math.gcd(nb,db)))
         # if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
-        if gcd(nb, db) < 2:
-            pretty = "({} / {})  {}".format(nb, db, fp)
+
+        gcd_ok = False
+
+        if PY3:
+            if math.gcd(nb,db) < 2:
+                gcd_ok =  True
+        else:
+            if gcd(nb, db) < 2:
+                gcd_ok = True
+
+        if gcd_ok:
+            # :0.0f needed for python2 compatibility
+            pretty = "({} / {:.0f})  {}".format(nb, db, fp)
+            # print("{} / {}  pretty {}".format(nb, db, pretty))
 
             try:
                 results.append ((pretty, t, (nb * f)/ db) )
@@ -249,7 +262,9 @@ def hpa_report(target, top_n, **kwargs):
 # ...........................................................................
 def main(argv):
 
-    global timing, tval, settings_short
+    global timing, tval, settings_short, PY3
+
+    PY3 = sys.version_info[0] == 3
 
     settings_short = None
 
