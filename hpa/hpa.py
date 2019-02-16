@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-12 12:00
+# 2019-02-16 13:00
 #
 # ...........................................................................
 #
@@ -31,6 +31,7 @@
 # 2019-02-07 09:45 clarify skip squares 4, 9, 16 cubes 8, 27 etc. -s True by default
 # 2019-02-10 21:00 math.inf and gcd changed for 2.7 compatibility
 # 2019-02-12 12:00 PY3 and pretty :0.0f needed for python2 compatibility
+# 2019-02-16 13:00 PY3 moved
 #
 # ...........................................................................
 
@@ -49,7 +50,9 @@ from fractions import gcd
 # ...........................................................................
 def hpa(target, **kwargs):
 
-    global results, settings_short, settings_verbose
+    global results, settings_short, settings_verbose, PY3
+
+    PY3 = sys.version_info[0] == 3
 
     results = []
 
@@ -164,7 +167,7 @@ def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
 # ...........................................................................
 def test_ratio():
 
-    global n, d, t, nb, db, best, results, f, fp
+    global n, d, t, nb, db, best, results, f, fp, PY3
 
     if ( abs(t) < best ):
         nb = n
@@ -176,8 +179,6 @@ def test_ratio():
         # if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
 
         gcd_ok = False
-
-        PY3 = sys.version_info[0] == 3
 
         if PY3:
             if math.gcd(nb,db) < 2:
