@@ -164,7 +164,7 @@ def hpa_p(tval, numdenmax, thresh, fixed, fixed_p):
 # ...........................................................................
 def test_ratio():
 
-    global PY3, n, d, t, nb, db, best, results, f, fp
+    global n, d, t, nb, db, best, results, f, fp
 
     if ( abs(t) < best ):
         nb = n
@@ -176,6 +176,8 @@ def test_ratio():
         # if math.gcd(nb,db) < 2: # for python2 : if gcd(nb, db) < 2:
 
         gcd_ok = False
+
+        PY3 = sys.version_info[0] == 3
 
         if PY3:
             if math.gcd(nb,db) < 2:
@@ -262,9 +264,7 @@ def hpa_report(target, top_n, **kwargs):
 # ...........................................................................
 def main(argv):
 
-    global timing, tval, settings_short, PY3
-
-    PY3 = sys.version_info[0] == 3
+    global timing, tval, settings_short
 
     settings_short = None
 
