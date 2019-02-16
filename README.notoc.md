@@ -209,10 +209,10 @@ hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
   Sometimes two or more results are equivalent (but may differ in value slightly due to rounding)
   
   For example
-  ```
+```
   (16 / 1)  * recip cbrt(3)           0.000000000000000	11.093780389610156
   (16 / 3)  * cbrt(9)                -0.000000000000002	11.093780389610155
-  ```
+```
 
 * #### Arbitrary precision arithmetic
 
