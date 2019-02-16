@@ -6,7 +6,7 @@
     -   [Settings display](#settings-display)
     -   [Future extensions](#future-extensions)
     -   [Usage](#usage)
-    -   [Python version compatibility](#python-version-compatibility)
+    -   [Python version](#python-version)
     -   [Examples](#examples)
         -   [python hpa.py](#python-hpa.py)
         -   [python hpa.py -x 5 -n 10000 -p
@@ -27,13 +27,14 @@
             0.618033988749855](#python-hpa.py--r--i--v-0.618033988749855)
 
 <!--
-2018-02-12 11:00
+2018-02-16 10:00
 
 2018-02-11 13:50  pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 2018-02-12 11:00  Python version section added to README
 2018-02-12 11:30  Now edit README.notoc.md and generate READ.md with TOC:
                   pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
 2018-02-12 12:00  Minor change re compatibility  
+2018-02-16 10:00  Alter future extensions
 -->
 hpa : high precision approximation
 ==================================
@@ -233,8 +234,6 @@ the long form:
 For example to discover sin, cos etc. values from common angles such as
 multiples of 30˚
 
--   #### Improve in-code documentation
-
 -   #### Remove mathematically equivalent results
 
 Sometimes two or more results are equivalent (but may differ in value
@@ -242,6 +241,17 @@ slightly due to rounding)
 
 For example
 `(16 / 1)  * recip cbrt(3)           0.000000000000000 11.093780389610156   (16 / 3)  * cbrt(9)                -0.000000000000002 11.093780389610155`
+
+-   #### Arbitrary precision arithmetic
+
+Python floating point arithmetic uses 53 bits (approximately 17
+significant digits) which is easily sufficient to represent most
+floating point calculations. However, it would be possible to extend hpa
+to use arbitrary precision arithmetic for example using mpmath
+(http://mpmath.org) in order to extend matching capability; perhaps to
+allow detection of more combinations of factors.
+
+-   #### Improve in-code documentation
 
 ### Usage
 
@@ -270,7 +280,7 @@ For example
       -t THR, --thr THR     sensitivity threshold value
       -v VAL, --val VAL     value to approximate
 
-### Python version compatibility
+### Python version
 
 hpa was first written for use with Python 3 but subsequently modified to
 be Python 2.7 compatible.
