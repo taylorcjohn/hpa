@@ -2,7 +2,7 @@
 # ...........................................................................
 # hpa.py
 #
-# 2019-02-16 13:00
+# 2019-02-17 11:00
 #
 # ...........................................................................
 #
@@ -32,6 +32,7 @@
 # 2019-02-10 21:00 math.inf and gcd changed for 2.7 compatibility
 # 2019-02-12 12:00 PY3 and pretty :0.0f needed for python2 compatibility
 # 2019-02-16 13:00 PY3 moved
+# 2019-02-17 11:00 threshold added to settings display
 #
 # ...........................................................................
 
@@ -66,13 +67,15 @@ def hpa(target, **kwargs):
     recip   = kwargs['enable_recip']
 
     hpa_p(target, ndmax, thresh, 1.0, "ratio")
-    settings_short = "settings: nd {} sm {} cm {}".format(ndmax, sm, cm)
+    settings_short = "settings: nd {} sm {} cm {} thr {}".format(ndmax, sm, cm, thresh)
 
     settings_verbose.append("{:<35} : {}".format("numerator/denominator limit", ndmax))
 
     settings_verbose.append("{:<35} : {}".format("square root max", sm))
 
     settings_verbose.append("{:<35} : {}".format("cube root max", cm))
+
+    settings_verbose.append("{:<35} : {}".format("threshold", thresh))
 
     if recip:
         settings_short = settings_short + " recip"
