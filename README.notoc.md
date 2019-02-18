@@ -1,5 +1,5 @@
 <!--
-2018-02-16 10:00
+2018-02-18 10:20
 
 2018-02-11 13:50  pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 2018-02-12 11:00  Python version section added to README
@@ -7,6 +7,9 @@
                   pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
 2018-02-12 12:00  Minor change re compatibility  
 2018-02-16 10:00  Alter future extensions
+2018-02-18 10:20  Termination documentation
+2018-02-18 10:20  pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
+
 -->
 
 # hpa : high precision approximation
@@ -149,9 +152,9 @@ information but in a longer form.
 For example, the short form:
 ```
 hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -s
-
- settings: nd 100 sm 8 cm 7 recip e pi phi tau
-
+ 
+ settings: nd 100 sm 8 cm 7 thr 1e-09 recip e pi phi tau
+ 
  top 10 best approximations to 3.141592653589793
 
  approximation                       error              value          
@@ -174,6 +177,7 @@ hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
  numerator/denominator limit         : 100
  square root max                     : 8
  cube root max                       : 7
+ threshold                           : 1e-09
  matching reciprocals                : True
  matching e                          : True
  matching pi                         : True
@@ -195,6 +199,24 @@ hpa.py -e -p -i -b -r -n 100 -2 8 -3 7 -S
  (78 / 43)  * sqrt(3)                0.000266950837473	3.141859604427266
  (89 / 77)  * e                      0.000317511771960	3.141910165361753
 ```
+
+
+### Termination
+
+hpa stops when one of two conditions is met; either
+
+* the larger of the numerator and denominator exceeds the numerator/denominator limit
+
+or
+
+* the best approximation (difference from target) is smaller than the threshold setting (default 1e-09)
+
+ 
+```
+while (max(n,d) < numdenmax) & (best > thresh):
+```
+
+Ordinarily the chosen number of results (top_n) or numerator/denominator limit determines the results shown.
 
 
 ### Future extensions
