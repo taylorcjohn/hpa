@@ -131,7 +131,7 @@ but hpa shows this to be "approximated" by 41/263 because 123 and 789
 share the factor 3.
 
 Even harder to discover, hpa can find hidden roots and 'special' numbers
-like Pi and e.
+like Pi and e as well as reciprocal values (-r).
 
 For example, 7 / 11 \* the cube root of 3 can be "untangled" from the
 value 0.917795181104714 which is many orders of magnitude closer to (7 /

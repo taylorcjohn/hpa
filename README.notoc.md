@@ -1,5 +1,5 @@
 <!--
-2018-02-22 12:44
+2018-02-22 13:20
 
 2018-02-11 13:50  pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 2018-02-12 11:00  Python version section added to README
@@ -10,6 +10,7 @@
 2018-02-18 10:20  Termination documentation
 2018-02-18 10:20  pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
 2018-02-22 12:44  license and usage options and minor edits
+2018-02-22 13:20  mention reciprocals
 
 -->
 
@@ -101,7 +102,7 @@ For example, dividing 123 by 789 produces 0.155893536121673 but hpa
 shows this to be "approximated" by 41/263 because 123 and 789 share the
 factor 3.
 
-Even harder to discover, hpa can find hidden roots and 'special' numbers like Pi and e.
+Even harder to discover, hpa can find hidden roots and 'special' numbers like Pi and e as well as reciprocal values (-r).
 
 For example, 7 / 11 * the cube root of 3 can be "untangled" from the value
 0.917795181104714 which is many orders of magnitude closer to
