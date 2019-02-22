@@ -1,5 +1,5 @@
 <!--
-2018-02-18 10:20
+2018-02-22 12:44
 
 2018-02-11 13:50  pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 2018-02-12 11:00  Python version section added to README
@@ -9,12 +9,13 @@
 2018-02-16 10:00  Alter future extensions
 2018-02-18 10:20  Termination documentation
 2018-02-18 10:20  pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
+2018-02-22 12:44  license and usage options and minor edits
 
 -->
 
 # hpa : high precision approximation
 
-Find rational approximations and other matches to floating point values.
+Find rational approximations and other matches to floating point values
 
 The name "high precision approximation" is a deliberate apparent
 oxymoron - it only works well with high internal precision
@@ -22,8 +23,7 @@ even though the intention is approximation...
 
 ### Rationale
 
-To obtain insight into underlying solutions and hints to rôle
-of symmetry
+To obtain insight into numerical solutions and hints to underlying symmetry
 
 This function attempts to find close approximations using simple
 fractions or measures using common roots such as sqrt(2)
@@ -219,7 +219,7 @@ while (max(n,d) < numdenmax) & (best > thresh):
 Ordinarily the chosen number of results (top_n) or numerator/denominator limit determines the results shown.
 
 
-### Future extensions
+### Possible future extensions
 
 * #### Trigonometric functions
 
@@ -241,7 +241,13 @@ Ordinarily the chosen number of results (top_n) or numerator/denominator limit d
   Python floating point arithmetic uses 53 bits (approximately 17 significant digits) which is easily sufficient
   to represent most floating point calculations.  However, it would be possible to extend hpa to use arbitrary
   precision arithmetic for example using mpmath (http://mpmath.org) in order to extend matching capability;
-  perhaps to allow detection of more combinations of factors.
+  perhaps to allow detection of more complex combinations of factors.
+
+
+* #### Greater detail for termination
+
+  It could be useful to distinguish the two separate termination reasons (and top_n) i.e.
+  which of the numerator/denominator limit and threshold value is the reason for ending the results
 
 
 * #### Improve in-code documentation
@@ -250,8 +256,8 @@ Ordinarily the chosen number of results (top_n) or numerator/denominator limit d
 ### Usage
 
 ```
-usage: hpa.py [-h] [-p] [-i] [-b] [-e] [-r] [-s] [-S] [-n NDMX] [-2 SQRT]
-              [-3 CBRT] [-x TOP] [-t THR] [-v VAL]
+usage: hpa.py [-h] [-p] [-i] [-b] [-e] [-r] [-s] [-S] [-l] [-u] [-n NDMX]
+              [-2 SQRT] [-3 CBRT] [-x TOP] [-t THR] [-v VAL]
               [value]
 
 hpa : high precision approximation
@@ -268,6 +274,8 @@ optional arguments:
   -r, --r               enable reciprocal matching
   -s, --s               show settings
   -S, --S               show verbose settings
+  -l, --lic             show license
+  -u, --use             show usage
   -n NDMX, --ndmx NDMX  numerator and denominator limit
   -2 SQRT, --sqrt SQRT  square root max integer value
   -3 CBRT, --cbrt CBRT  cube root max integer value
