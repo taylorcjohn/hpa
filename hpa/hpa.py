@@ -1,8 +1,26 @@
 #!/usr/bin/env python
 # ...........................................................................
-# hpa.py
 #
-# 2019-02-17 11:00
+# hpa.py (High Precision Approximation) Find rational approximations and other matches to floating point values
+#
+# Copyright (C) 2019  John Taylor
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# ...........................................................................
+#
+# 2019-02-22 12:55
 #
 # ...........................................................................
 #
@@ -33,6 +51,7 @@
 # 2019-02-12 12:00 PY3 and pretty :0.0f needed for python2 compatibility
 # 2019-02-16 13:00 PY3 moved
 # 2019-02-17 11:00 threshold added to settings display
+# 2019-02-22 12:55 license and usage options
 #
 # ...........................................................................
 
@@ -202,12 +221,31 @@ def test_ratio():
 
 
 # ...........................................................................
-# usage message
+# license message
 # ...........................................................................
-def usage(argv):
-    print('usage : ' + argv[0] + ' -h help -t thresh -n numdenmax -m sqrtmax -v value -x top_n -2 sqrtmax -3 cubemax ')
-    os._exit(1)
+def print_license():
+    print('')
+    print('hpa.py Copyright (C) 2019  John Taylor')
+    print('')
+    print('This program is free software: you can redistribute it and/or modify')
+    print('it under the terms of the GNU General Public License as published by')
+    print('the Free Software Foundation, either version 3 of the License, or')
+    print('(at your option) any later version.')
+    print('')
+    print('This program is distributed in the hope that it will be useful,')
+    print('but WITHOUT ANY WARRANTY; without even the implied warranty of')
+    print('MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the')
+    print('GNU General Public License for more details.')
+    print('')
+    print('See https://www.gnu.org/licenses/')
+    print('')
+    print('Please leave suggestions for improving the script on Github')
+    print('or by email to the author')
+    print('')
+    print('John Taylor (t a y l o r c j o h n @ c a n t a b . n e t)')
+    print('')
 
+    os._exit(1)
 
 # ...........................................................................
 def takeSecond(elem):
@@ -285,6 +323,8 @@ def main(argv):
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
         parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
+        parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license')
+        parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage')
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
@@ -309,12 +349,20 @@ def main(argv):
         rargs['settings']     = args.s
         rargs['verbose']      = args.S
 
+        if args.use:
+            parser.print_usage()
+            sys.exit(0)
+
+        if args.lic:
+            print_license()
+            sys.exit(0)
+
+        # ...........................................................................
+        # call hpa (via hpa_report()
+        # ...........................................................................
         if args.val is None:
             args.val = args.value
 
-        # ...........................................................................
-        # call hpa
-        # ...........................................................................
         if args.val is None:
             args.val = math.pi
 
