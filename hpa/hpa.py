@@ -20,7 +20,7 @@
 #
 # ...........................................................................
 #
-# 2019-02-22 12:55
+# 2019-02-26 14:00
 #
 # ...........................................................................
 #
@@ -52,7 +52,7 @@
 # 2019-02-16 13:00 PY3 moved
 # 2019-02-17 11:00 threshold added to settings display
 # 2019-02-22 12:55 license and usage options
-#
+# 2019-02-26 14:00 'and exit'
 # ...........................................................................
 
 import traceback
@@ -323,8 +323,8 @@ def main(argv):
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
         parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
-        parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license')
-        parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage')
+        parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license and exit')
+        parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage and exit')
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
