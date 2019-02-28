@@ -249,6 +249,12 @@ Ordinarily the chosen number of results (top_n) or numerator/denominator limit d
 
   It could be useful to distinguish the two separate termination reasons (and top_n) i.e.
   which of the numerator/denominator limit and threshold value is the reason for ending the results
+  
+
+* #### poll options
+
+It could be useful to automatically try various options in turn e.g. first matching only
+ratios, then adding square roots, then cube roots etc.
 
 
 * #### Improve in-code documentation
