@@ -18,9 +18,8 @@
 
 Find rational approximations and other matches to floating point values
 
-The name "high precision approximation" is a deliberate apparent
-oxymoron - it only works well with high internal precision
-even though the intention is approximation...
+The name "high precision approximation" is a deliberate oxymoron - it only works well with high
+internal precision even though the intention is approximation...
 
 ### Rationale
 
