@@ -28,7 +28,7 @@
             0.618033988749855](#python-hpa.py--r--i--v-0.618033988749855)
 
 <!--
-2018-02-22 12:44
+2018-02-22 13:20
 
 2018-02-11 13:50  pandoc -s -f markdown -i README.md -o README.pdf --latex-engine=xelatex --toc --toc-depth=6
 2018-02-12 11:00  Python version section added to README
@@ -39,6 +39,7 @@
 2018-02-18 10:20  Termination documentation
 2018-02-18 10:20  pandoc -s -f markdown -i README.notoc.md -o README.md --toc --toc-depth=4
 2018-02-22 12:44  license and usage options and minor edits
+2018-02-22 13:20  mention reciprocals
 
 -->
 hpa : high precision approximation
@@ -46,9 +47,9 @@ hpa : high precision approximation
 
 Find rational approximations and other matches to floating point values
 
-The name "high precision approximation" is a deliberate apparent
-oxymoron - it only works well with high internal precision even though
-the intention is approximation...
+The name "high precision approximation" is a deliberate oxymoron - it
+only works well with high internal precision even though the intention
+is approximation...
 
 ### Rationale
 
@@ -286,8 +287,9 @@ value is the reason for ending the results
 
 -   #### poll options
 
-It could be useful to automatically try various options in turn e.g. first matching only
-ratios, then adding square roots, then cube roots etc.
+It could be useful to automatically try various options in turn e.g.
+first matching only ratios, then adding square roots, then cube roots
+etc.
 
 -   #### Improve in-code documentation
 
