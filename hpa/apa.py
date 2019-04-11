@@ -292,6 +292,7 @@ def main(argv):
         # ...........................................................................
         parser = argparse.ArgumentParser(description='hpa : high precision approximation')
 
+        parser.add_argument('-a', '--apa', action='store_true', default=True,  help='enable arbitrary precision')
         parser.add_argument('-p', '--pi',  action='store_true', default=False, help='enable Pi matching')
         parser.add_argument('-i', '--phi', action='store_true', default=False, help='enable Phi matching')
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
@@ -302,6 +303,7 @@ def main(argv):
         parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license and exit')
         parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage and exit')
 
+        parser.add_argument('-A', '--prec',     action='store', type=int, default=100,  help='arbitrary precision digit count')
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
         parser.add_argument('-3', '--cbrt',     action='store', type=int, default=10,   help='cube root max integer value')
