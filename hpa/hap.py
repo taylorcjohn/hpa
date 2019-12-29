@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # ...........................................................................
 #
-# apa.py (Arbitrarily Precise Approximation) Find rational approximations and other matches to floating point values
+# hap.py (High Precision Arbitrarily Precise Approximation) Find rational approximations and other matches to floating point values
 #
 # Copyright (C) 2019  John Taylor
 #
@@ -19,12 +19,15 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # ...........................................................................
+# Arbitrary precision requires all floating point variables to be instances of mpf()
+# ...........................................................................
 #
 # 2019-03-14 14:30
 #
 # ...........................................................................
 #
 # 2019-03-14 14:30 First version (Pi day)
+# 2019-12-29 18:40 '-T time option'
 # ...........................................................................
 
 import traceback
@@ -32,9 +35,11 @@ import math
 import argparse
 import os
 import sys
+import time
+from mpmath import mp
+
 # for python2:
 from fractions import gcd
-from mpmath import mp
 
 # ...........................................................................
 # high precision approximation
@@ -281,6 +286,8 @@ def main(argv):
 
     global timing, tval, settings_short
 
+    time_start = time.time()
+
     settings_short = None
 
     mp.dps = 50
@@ -292,7 +299,7 @@ def main(argv):
         # ...........................................................................
         parser = argparse.ArgumentParser(description='hpa : high precision approximation')
 
-        parser.add_argument('-a', '--apa', action='store_true', default=True,  help='enable arbitrary precision')
+        parser.add_argument('-a', '--apa', action='store_true', default=True,  help='toggle arbitrary precision')
         parser.add_argument('-p', '--pi',  action='store_true', default=False, help='enable Pi matching')
         parser.add_argument('-i', '--phi', action='store_true', default=False, help='enable Phi matching')
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
@@ -302,6 +309,7 @@ def main(argv):
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
         parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license and exit')
         parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage and exit')
+        parser.add_argument("-T", "--time",action="store_true", help="show run time")
 
         parser.add_argument('-A', '--prec',     action='store', type=int, default=100,  help='arbitrary precision digit count')
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
@@ -349,6 +357,9 @@ def main(argv):
 
         hpa_report(target, top_n, **rargs)
 
+        time_end = time.time()
+        if args.time:
+            print ( "\n {0:0.2f} seconds".format(time_end - time_start))
     except:
         pass
 #       traceback.print_exc()

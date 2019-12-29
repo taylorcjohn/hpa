@@ -53,6 +53,7 @@
 # 2019-02-17 11:00 threshold added to settings display
 # 2019-02-22 12:55 license and usage options
 # 2019-02-26 14:00 'and exit'
+# 2019-12-29 18:40 '-T time option'
 # ...........................................................................
 
 import traceback
@@ -60,6 +61,7 @@ import math
 import argparse
 import os
 import sys
+import time
 # for python2:
 from fractions import gcd
 
@@ -308,6 +310,8 @@ def main(argv):
 
     global timing, tval, settings_short
 
+    time_start = time.time()
+
     settings_short = None
 
     try:
@@ -325,6 +329,7 @@ def main(argv):
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
         parser.add_argument('-l', '--lic', action='store_true', default=False, help='show license and exit')
         parser.add_argument('-u', '--use', action='store_true', default=False, help='show usage and exit')
+        parser.add_argument("-T", "--time",action="store_true", help="show run time")
 
         parser.add_argument('-n', '--ndmx',     action='store', type=int, default=1000, help='numerator and denominator limit')
         parser.add_argument('-2', '--sqrt',     action='store', type=int, default=10,   help='square root max integer value')
@@ -371,6 +376,9 @@ def main(argv):
 
         hpa_report(target, top_n, **rargs)
 
+        time_end = time.time()
+        if args.time:
+            print ( "\n {0:0.2f} seconds".format(time_end - time_start))
     except:
         pass
 #       traceback.print_exc()
