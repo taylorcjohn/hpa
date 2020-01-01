@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # ...........................................................................
 #
 # hap.py (High Precision Arbitrarily Precise Approximation) Find rational approximations and other matches to floating point values
@@ -28,6 +28,7 @@
 #
 # 2019-03-14 14:30 First version (Pi day)
 # 2019-12-29 18:40 '-T time option'
+# 2020-01-01 13:00 executable python3 for mpmath
 # ...........................................................................
 
 import traceback
