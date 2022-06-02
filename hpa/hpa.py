@@ -227,7 +227,7 @@ def test_ratio():
 # ...........................................................................
 def print_license():
     print('')
-    print('hpa.py Copyright (C) 2019  John Taylor')
+    print('hpa.py Copyright (C) 2022  John Taylor')
     print('')
     print('This program is free software: you can redistribute it and/or modify')
     print('it under the terms of the GNU General Public License as published by')
