@@ -3,7 +3,7 @@
 #
 # hpa.py (High Precision Approximation) Find rational approximations and other matches to floating point values
 #
-# Copyright (C) 2019  John Taylor
+# Copyright (C) 2022  John Taylor
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #
 # ...........................................................................
 #
-# 2019-02-26 14:00
+# 2022-06-28 15:00
 #
 # ...........................................................................
 #
@@ -54,6 +54,7 @@
 # 2019-02-22 12:55 license and usage options
 # 2019-02-26 14:00 'and exit'
 # 2019-12-29 18:40 '-T time option'
+# 2022-06-28 18:40 '-P match pi squared'
 # ...........................................................................
 
 import traceback
@@ -63,7 +64,7 @@ import os
 import sys
 import time
 # for python2:
-from fractions import gcd
+import fractions
 
 # ...........................................................................
 # high precision approximation
@@ -111,6 +112,12 @@ def hpa(target, **kwargs):
         hpa_pr(target, ndmax, thresh, math.pi, "Pi", recip)
         settings_short = settings_short + " pi"
         settings_verbose.append("{:<35} : {}".format("matching pi", True))
+
+    if kwargs['enable_pi2']:
+        pi2 = math.pi * math.pi
+        hpa_pr(target, ndmax, thresh, pi2, "Pi squared", recip)
+        settings_short = settings_short + " pi2"
+        settings_verbose.append("{:<35} : {}".format("matching pi squared", True))
 
     if kwargs['enable_phi']:
         phi = (1 + 5 ** 0.5) / 2
@@ -208,7 +215,7 @@ def test_ratio():
             if math.gcd(nb,db) < 2:
                 gcd_ok =  True
         else:
-            if gcd(nb, db) < 2:
+            if fractions.gcd(nb, db) < 2:
                 gcd_ok = True
 
         if gcd_ok:
@@ -321,6 +328,7 @@ def main(argv):
         parser = argparse.ArgumentParser(description='hpa : high precision approximation')
 
         parser.add_argument('-p', '--pi',  action='store_true', default=False, help='enable Pi matching')
+        parser.add_argument('-P', '--pi2', action='store_true', default=False, help='enable Pi squared matching')
         parser.add_argument('-i', '--phi', action='store_true', default=False, help='enable Phi matching')
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
         parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
@@ -347,6 +355,7 @@ def main(argv):
         rargs['sm']           = args.sqrt
         rargs['cm']           = args.cbrt
         rargs['enable_pi']    = args.pi
+        rargs['enable_pi2']   = args.pi2
         rargs['enable_phi']   = args.phi
         rargs['enable_e']     = args.e
         rargs['enable_tau']   = args.tau
