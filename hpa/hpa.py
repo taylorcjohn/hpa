@@ -109,6 +109,12 @@ def hpa(target, **kwargs):
         settings_short = settings_short + " e"
         settings_verbose.append("{:<35} : {}".format("matching e", True))
 
+    if kwargs['enable_e2']:
+        e2 = math.e * math.e
+        hpa_pr(target, ndmax, thresh, e2, "e squared", recip)
+        settings_short = settings_short + " e2"
+        settings_verbose.append("{:<35} : {}".format("matching e squared", True))
+
     if kwargs['enable_pi']:
         hpa_pr(target, ndmax, thresh, math.pi, "Pi", recip)
         settings_short = settings_short + " pi"
