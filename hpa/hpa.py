@@ -20,7 +20,7 @@
 #
 # ...........................................................................
 #
-# 2022-06-28 15:00
+# 2022-06-29 09:45
 #
 # ...........................................................................
 #
@@ -55,6 +55,7 @@
 # 2019-02-26 14:00 'and exit'
 # 2019-12-29 18:40 '-T time option'
 # 2022-06-28 18:40 '-P match pi squared'
+# 2022-06-28 18:40 '-E match e squared'
 # ...........................................................................
 
 import traceback
@@ -256,6 +257,7 @@ def print_license():
 
     os._exit(1)
 
+
 # ...........................................................................
 def takeSecond(elem):
     return abs(elem[1])
@@ -271,7 +273,7 @@ def hpa_report(target, top_n, **kwargs):
     # ...........................................................................
     # remember if negative
     # ...........................................................................
-    if (target < 0):
+    if target < 0:
         tneg = True
         tval = 0.0 - target
         sign = "-"
@@ -332,6 +334,7 @@ def main(argv):
         parser.add_argument('-i', '--phi', action='store_true', default=False, help='enable Phi matching')
         parser.add_argument('-b', '--tau', action='store_true', default=False, help='enable Tau matching')
         parser.add_argument('-e', '--e',   action='store_true', default=False, help='enable e matching')
+        parser.add_argument('-E', '--e2',  action='store_true', default=False, help='enable e squared matching')
         parser.add_argument('-r', '--r',   action='store_true', default=False, help='enable reciprocal matching')
         parser.add_argument('-s', '--s',   action='store_true', default=False, help='show settings')
         parser.add_argument('-S', '--S',   action='store_true', default=False, help='show verbose settings')
@@ -358,6 +361,7 @@ def main(argv):
         rargs['enable_pi2']   = args.pi2
         rargs['enable_phi']   = args.phi
         rargs['enable_e']     = args.e
+        rargs['enable_e2']    = args.e2
         rargs['enable_tau']   = args.tau
         rargs['enable_recip'] = args.r
         rargs['settings']     = args.s
